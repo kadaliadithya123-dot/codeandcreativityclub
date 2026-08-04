@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { DEPARTMENTS, SECTIONS, YEARS } from "@/lib/constants";
 
@@ -35,28 +34,30 @@ export const Route = createFileRoute("/_authenticated/admin/tests")({
 type TestRow = {
   id: string;
   title: string;
-  description: string | null;
   year: string;
   department: string;
   section: string;
   subject: string;
   duration_minutes: number;
   question_count: number;
-  is_published: boolean;
+  status: string;
+  shuffle_questions: boolean;
+  shuffle_options: boolean;
 };
 
 type FormState = Omit<TestRow, "id">;
 
 const EMPTY_FORM: FormState = {
   title: "",
-  description: "",
   year: "Second Year",
   department: "CME",
   section: "A",
   subject: "",
   duration_minutes: 20,
   question_count: 10,
-  is_published: false,
+  status: "draft",
+  shuffle_questions: true,
+  shuffle_options: false,
 };
 
 function TestsPage() {
@@ -77,7 +78,7 @@ function TestsPage() {
     },
   });
 
-  const published = useMemo(() => tests.filter((row) => row.is_published).length, [tests]);
+  const published = useMemo(() => tests.filter((row) => row.status === "published").length, [tests]);
 
   const save = useMutation({
     mutationFn: async (payload: { id?: string; values: FormState }) => {
@@ -101,7 +102,7 @@ function TestsPage() {
     mutationFn: async (row: TestRow) => {
       const { error } = await supabase
         .from("tests")
-        .update({ is_published: !row.is_published })
+        .update({ status: row.status === "published" ? "draft" : "published" })
         .eq("id", row.id);
       if (error) throw error;
     },
@@ -174,14 +175,10 @@ function TestsPage() {
                   {row.year} · {row.department}-{row.section} · {row.subject}
                 </p>
               </div>
-              <Badge variant={row.is_published ? "default" : "outline"}>
-                {row.is_published ? "Published" : "Draft"}
+              <Badge variant={row.status === "published" ? "default" : "outline"}>
+                {row.status === "published" ? "Published" : "Draft"}
               </Badge>
             </div>
-
-            {row.description && (
-              <p className="line-clamp-2 text-sm text-muted-foreground">{row.description}</p>
-            )}
 
             <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
               <span>{row.question_count} questions</span>
@@ -191,7 +188,7 @@ function TestsPage() {
             <div className="flex items-center justify-between border-t border-border/60 pt-3">
               <label className="flex items-center gap-2 text-sm">
                 <Switch
-                  checked={row.is_published}
+                  checked={row.status === "published"}
                   onCheckedChange={() => togglePublish.mutate(row)}
                   aria-label="Toggle published"
                 />
@@ -231,17 +228,6 @@ function TestsPage() {
               maxLength={120}
               value={form.title}
               onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              rows={2}
-              maxLength={400}
-              value={form.description ?? ""}
-              onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}
             />
           </div>
 
@@ -304,13 +290,35 @@ function TestsPage() {
             </div>
           </div>
 
-          <label className="flex items-center gap-3 text-sm">
-            <Switch
-              checked={form.is_published}
-              onCheckedChange={(checked) => setForm((prev) => ({ ...prev, is_published: checked }))}
-            />
-            Publish immediately
-          </label>
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 text-sm">
+              <Switch
+                checked={form.status === "published"}
+                onCheckedChange={(checked) =>
+                  setForm((prev) => ({ ...prev, status: checked ? "published" : "draft" }))
+                }
+              />
+              Publish immediately
+            </label>
+            <label className="flex items-center gap-3 text-sm">
+              <Switch
+                checked={form.shuffle_questions}
+                onCheckedChange={(checked) =>
+                  setForm((prev) => ({ ...prev, shuffle_questions: checked }))
+                }
+              />
+              Shuffle question order
+            </label>
+            <label className="flex items-center gap-3 text-sm">
+              <Switch
+                checked={form.shuffle_options}
+                onCheckedChange={(checked) =>
+                  setForm((prev) => ({ ...prev, shuffle_options: checked }))
+                }
+              />
+              Shuffle answer options
+            </label>
+          </div>
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>

@@ -152,11 +152,19 @@ function QuestionsPage() {
     save.mutate({ values: { ...values, question: `${values.question} (copy)` } });
   }
 
-  function handleSubmit() {
-    if (form.subject.trim().length < 2) return toast.error("Enter a subject");
-    if (form.question.trim().length < 5) return toast.error("Enter the question text");
-    if (!form.option_a || !form.option_b || !form.option_c || !form.option_d)
-      return toast.error("All four options are required");
+  function handleSubmit(): void {
+    if (form.subject.trim().length < 2) {
+      toast.error("Enter a subject");
+      return;
+    }
+    if (form.question.trim().length < 5) {
+      toast.error("Enter the question text");
+      return;
+    }
+    if (!form.option_a || !form.option_b || !form.option_c || !form.option_d) {
+      toast.error("All four options are required");
+      return;
+    }
     save.mutate({ ...(editing ? { id: editing.id } : {}), values: form });
   }
 

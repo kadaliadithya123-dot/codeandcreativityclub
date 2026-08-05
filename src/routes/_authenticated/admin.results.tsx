@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, ChevronUp, Download, Printer, Search, Trash2 } from "lucide-react";
@@ -237,8 +237,8 @@ function ResultsPage() {
             {rows.map((row) => {
               const badge = performanceBadge(Number(row.percentage));
               return (
-                <>
-                <tr key={row.id} className="border-b border-border/40 last:border-0">
+                <Fragment key={row.id}>
+                <tr className="border-b border-border/40 last:border-0">
                   <td className="px-4 py-3">
                     <p className="font-medium">{row.students?.name}</p>
                     <p className="text-xs text-muted-foreground">
@@ -294,7 +294,7 @@ function ResultsPage() {
                     </td>
                   </tr>
                 )}
-                </>
+                </Fragment>
               );
             })}
           </tbody>

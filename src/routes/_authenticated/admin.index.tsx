@@ -54,11 +54,8 @@ function AdminDashboard() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button asChild variant="outline" size="sm">
-            <Link to="/admin/questions">Add question</Link>
-          </Button>
           <Button asChild size="sm">
-            <Link to="/admin/tests">Create test</Link>
+            <Link to="/admin/tests">Manage tests &amp; questions</Link>
           </Button>
         </div>
       </div>

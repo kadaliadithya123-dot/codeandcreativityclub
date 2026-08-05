@@ -4,7 +4,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
   ClipboardList,
-  FileQuestion,
   LayoutDashboard,
   LogOut,
   Settings,
@@ -31,7 +30,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 const NAV = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
-  { title: "Manage Questions", url: "/admin/questions", icon: FileQuestion },
   { title: "Manage Tests", url: "/admin/tests", icon: ClipboardList },
   { title: "Students", url: "/admin/students", icon: Users },
   { title: "Results", url: "/admin/results", icon: Trophy },

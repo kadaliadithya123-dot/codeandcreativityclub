@@ -18,11 +18,10 @@ import { Route as TestRouteImport } from './routes/test'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin.analytics'
-import { Route as AuthenticatedAdminQuestionsRouteImport } from './routes/_authenticated/admin.questions'
 import { Route as AuthenticatedAdminResultsRouteImport } from './routes/_authenticated/admin.results'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminStudentsRouteImport } from './routes/_authenticated/admin.students'
-import { Route as AuthenticatedAdminTestsRouteImport } from './routes/_authenticated/admin.tests'
+import { Route as AuthenticatedAdminTestsIndexRouteImport } from './routes/_authenticated/admin.tests.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -69,12 +68,6 @@ const AuthenticatedAdminAnalyticsRoute =
     path: '/analytics',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const AuthenticatedAdminQuestionsRoute =
-  AuthenticatedAdminQuestionsRouteImport.update({
-    id: '/questions',
-    path: '/questions',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
 const AuthenticatedAdminResultsRoute =
   AuthenticatedAdminResultsRouteImport.update({
     id: '/results',
@@ -93,11 +86,12 @@ const AuthenticatedAdminStudentsRoute =
     path: '/students',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const AuthenticatedAdminTestsRoute = AuthenticatedAdminTestsRouteImport.update({
-  id: '/tests',
-  path: '/tests',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
+const AuthenticatedAdminTestsIndexRoute =
+  AuthenticatedAdminTestsIndexRouteImport.update({
+    id: '/tests/',
+    path: '/tests/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -107,12 +101,11 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
-  '/admin/questions': typeof AuthenticatedAdminQuestionsRoute
   '/admin/results': typeof AuthenticatedAdminResultsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
-  '/admin/tests': typeof AuthenticatedAdminTestsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -121,12 +114,11 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/test': typeof TestRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
-  '/admin/questions': typeof AuthenticatedAdminQuestionsRoute
   '/admin/results': typeof AuthenticatedAdminResultsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
-  '/admin/tests': typeof AuthenticatedAdminTestsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/tests': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -138,12 +130,11 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
-  '/_authenticated/admin/questions': typeof AuthenticatedAdminQuestionsRoute
   '/_authenticated/admin/results': typeof AuthenticatedAdminResultsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/students': typeof AuthenticatedAdminStudentsRoute
-  '/_authenticated/admin/tests': typeof AuthenticatedAdminTestsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -155,12 +146,11 @@ export interface FileRouteTypes {
     | '/test'
     | '/admin'
     | '/admin/analytics'
-    | '/admin/questions'
     | '/admin/results'
     | '/admin/settings'
     | '/admin/students'
-    | '/admin/tests'
     | '/admin/'
+    | '/admin/tests/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -169,12 +159,11 @@ export interface FileRouteTypes {
     | '/start'
     | '/test'
     | '/admin/analytics'
-    | '/admin/questions'
     | '/admin/results'
     | '/admin/settings'
     | '/admin/students'
-    | '/admin/tests'
     | '/admin'
+    | '/admin/tests'
   id:
     | '__root__'
     | '/'
@@ -185,12 +174,11 @@ export interface FileRouteTypes {
     | '/test'
     | '/_authenticated/admin'
     | '/_authenticated/admin/analytics'
-    | '/_authenticated/admin/questions'
     | '/_authenticated/admin/results'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/students'
-    | '/_authenticated/admin/tests'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/tests/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -267,13 +255,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/admin/questions': {
-      id: '/_authenticated/admin/questions'
-      path: '/questions'
-      fullPath: '/admin/questions'
-      preLoaderRoute: typeof AuthenticatedAdminQuestionsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
     '/_authenticated/admin/results': {
       id: '/_authenticated/admin/results'
       path: '/results'
@@ -295,11 +276,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStudentsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/admin/tests': {
-      id: '/_authenticated/admin/tests'
+    '/_authenticated/admin/tests/': {
+      id: '/_authenticated/admin/tests/'
       path: '/tests'
-      fullPath: '/admin/tests'
-      preLoaderRoute: typeof AuthenticatedAdminTestsRouteImport
+      fullPath: '/admin/tests/'
+      preLoaderRoute: typeof AuthenticatedAdminTestsIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
   }
@@ -307,22 +288,20 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
-  AuthenticatedAdminQuestionsRoute: typeof AuthenticatedAdminQuestionsRoute
   AuthenticatedAdminResultsRoute: typeof AuthenticatedAdminResultsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminStudentsRoute: typeof AuthenticatedAdminStudentsRoute
-  AuthenticatedAdminTestsRoute: typeof AuthenticatedAdminTestsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminTestsIndexRoute: typeof AuthenticatedAdminTestsIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
-  AuthenticatedAdminQuestionsRoute: AuthenticatedAdminQuestionsRoute,
   AuthenticatedAdminResultsRoute: AuthenticatedAdminResultsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminStudentsRoute: AuthenticatedAdminStudentsRoute,
-  AuthenticatedAdminTestsRoute: AuthenticatedAdminTestsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminTestsIndexRoute: AuthenticatedAdminTestsIndexRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =

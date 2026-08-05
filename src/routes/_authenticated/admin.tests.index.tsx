@@ -27,7 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { DEPARTMENTS, SECTIONS, YEARS } from "@/lib/constants";
 
-export const Route = createFileRoute("/_authenticated/admin/tests")({
+export const Route = createFileRoute("/_authenticated/admin/tests/")({
   component: TestsPage,
 });
 

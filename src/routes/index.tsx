@@ -31,36 +31,36 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const FEATURES = [
+const EXAM_STEPS = [
+  {
+    icon: MousePointerClick,
+    title: "Step 1 — Open Start Test",
+    body: "Tap Start Test on the home page to open the exam entry form.",
+  },
   {
     icon: Layers,
-    title: "Section-aware tests",
-    body: "Questions are scoped to year, department and section so students only ever see their own paper.",
+    title: "Step 2 — Pick your class",
+    body: "Choose your academic year, then your department (branch), then your section.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Step 3 — Confirm your details",
+    body: "Enter your full name and hall ticket number exactly as printed, then press Continue.",
   },
   {
     icon: Clock,
-    title: "Timed with auto-save",
-    body: "A live countdown, question palette and progress bar keep every attempt on track and recoverable.",
+    title: "Step 4 — Watch the timer",
+    body: "The countdown starts as soon as the paper loads. Use the question palette to move around.",
   },
   {
-    icon: ShieldCheck,
-    title: "Tamper-proof grading",
-    body: "Answers are graded on the server, and one hall ticket can submit an attempt exactly once.",
+    icon: ListChecks,
+    title: "Step 5 — Answer every question",
+    body: "Each answer is saved automatically, so you can revisit and change it before submitting.",
   },
   {
-    icon: BarChart3,
-    title: "Result analytics",
-    body: "Department, year and section performance charts turn raw submissions into teaching insight.",
-  },
-  {
-    icon: FileSpreadsheet,
-    title: "Export & print",
-    body: "Download CSV reports or print a clean result sheet straight from the results workspace.",
-  },
-  {
-    icon: Sparkles,
-    title: "Ready for coding items",
-    body: "The question model is built to grow into coding, paragraph, fill-in-the-blank and true/false items.",
+    icon: Send,
+    title: "Step 6 — Submit and see your score",
+    body: "Press Submit (or let the timer end) and your score appears instantly on the result page.",
   },
 ];
 
@@ -165,9 +165,12 @@ function Index() {
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Everything an exam cell needs</h2>
+          <h2 className="text-2xl font-semibold sm:text-3xl">Steps to write an exam</h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+            Follow these six steps to attempt your coding test without any confusion.
+          </p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map((feature, index) => (
+            {EXAM_STEPS.map((feature, index) => (
               <motion.article
                 key={feature.title}
                 initial={{ opacity: 0, y: 12 }}

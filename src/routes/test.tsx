@@ -77,6 +77,7 @@ function TestPage() {
           data: {
             student_id: attempt.student.id,
             test_id: attempt.test.id,
+            attempt_token: attempt.attemptToken,
             time_taken_seconds: elapsed,
             answers: attempt.answers,
           },
@@ -87,7 +88,9 @@ function TestPage() {
           toast.error(
             response.reason === "already_attempted"
               ? "This test was already submitted."
-              : "Could not save your submission. Try again.",
+              : response.reason === "invalid_attempt"
+                ? "This exam session has expired. Please start the test again."
+                : "Could not save your submission. Try again.",
           );
           return;
         }

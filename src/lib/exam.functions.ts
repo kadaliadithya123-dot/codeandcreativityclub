@@ -28,6 +28,7 @@ const startSchema = scopeSchema.extend({
 const submitSchema = z.object({
   student_id: z.string().uuid(),
   test_id: z.string().uuid(),
+  attempt_token: z.string().min(20).max(500),
   time_taken_seconds: z.number().int().min(0).max(60 * 60 * 8),
   answers: z.record(z.string().uuid(), z.enum(["A", "B", "C", "D"])),
 });
@@ -82,20 +83,31 @@ export const startAttempt = createServerFn({ method: "POST" })
     }
 
     const hallTicket = data.hall_ticket.toUpperCase();
-    const { data: student, error: studentError } = await supabaseAdmin
+    // Never rename/overwrite an existing student row from a public endpoint:
+    // reuse the stored record and only insert when the hall ticket is new.
+    const { data: knownStudent } = await supabaseAdmin
       .from("students")
-      .upsert(
-        {
+      .select("*")
+      .eq("hall_ticket", hallTicket)
+      .maybeSingle();
+
+    let student = knownStudent;
+    let studentError: unknown = null;
+    if (!student) {
+      const inserted = await supabaseAdmin
+        .from("students")
+        .insert({
           hall_ticket: hallTicket,
           name: data.name,
           year: data.year,
           department: data.department,
           section: data.section,
-        },
-        { onConflict: "hall_ticket" },
-      )
-      .select("*")
-      .single();
+        })
+        .select("*")
+        .single();
+      student = inserted.data;
+      studentError = inserted.error;
+    }
 
     if (studentError || !student) {
       return { ok: false as const, reason: "student_error" as const };
@@ -127,9 +139,13 @@ export const startAttempt = createServerFn({ method: "POST" })
     if (test.shuffle_questions) pool = shuffle(pool);
     pool = pool.slice(0, Math.max(1, test.question_count));
 
+    const { issueAttemptToken } = await import("./attempt-token.server");
+    const attemptToken = await issueAttemptToken(student.id, test.id);
+
     return {
       ok: true as const,
       student,
+      attempt_token: attemptToken,
       test: {
         id: test.id,
         title: test.title,
@@ -146,6 +162,11 @@ export const submitAttempt = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => submitSchema.parse(input))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    // Only the browser that started this exact attempt may submit it.
+    const { verifyAttemptToken } = await import("./attempt-token.server");
+    const tokenOk = await verifyAttemptToken(data.attempt_token, data.student_id, data.test_id);
+    if (!tokenOk) return { ok: false as const, reason: "invalid_attempt" as const };
 
     const questionIds = Object.keys(data.answers);
     const { data: test } = await supabaseAdmin

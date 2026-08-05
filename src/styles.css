@@ -164,6 +164,24 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Faster, more reliable touch/click response */
+  button,
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+
+  button:active,
+  [role="button"]:active {
+    transform: translateZ(0) scale(0.985);
   }
 
   h1,
@@ -185,8 +203,14 @@
 @utility glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(18px) saturate(140%);
   box-shadow: var(--shadow-elegant);
+}
+
+/* Blur is expensive on low-end/mobile GPUs — only on capable pointers */
+@media (min-width: 1024px) and (pointer: fine) {
+  .glass {
+    backdrop-filter: blur(10px);
+  }
 }
 
 @utility hero-surface {
@@ -219,4 +243,15 @@
 
 @utility animate-float {
   animation: float-slow 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

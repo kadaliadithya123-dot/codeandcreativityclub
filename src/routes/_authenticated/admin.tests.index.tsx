@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { ListChecks, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -153,7 +153,8 @@ function TestsPage() {
         <div>
           <h1 className="text-2xl font-semibold">Manage Tests</h1>
           <p className="text-sm text-muted-foreground">
-            {tests.length} test{tests.length === 1 ? "" : "s"} · {published} published
+            {tests.length} test{tests.length === 1 ? "" : "s"} · {published} published · open a test
+            to manage its questions
           </p>
         </div>
         <Button onClick={openCreate}>
@@ -195,6 +196,11 @@ function TestsPage() {
                 Live for students
               </label>
               <div className="flex gap-1">
+                <Button variant="secondary" size="sm" asChild>
+                  <Link to="/admin/tests/$testId" params={{ testId: row.id }}>
+                    <ListChecks className="mr-1 size-4" /> Questions
+                  </Link>
+                </Button>
                 <Button variant="ghost" size="icon" aria-label="Edit" onClick={() => openEdit(row)}>
                   <Pencil className="size-4" />
                 </Button>

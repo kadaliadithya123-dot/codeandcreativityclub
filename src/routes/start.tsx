@@ -131,9 +131,9 @@ function StartPage() {
 
           <motion.section
             key={step}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
             className="glass rounded-3xl p-6 sm:p-8"
           >
             <h1 className="text-2xl font-semibold">{STEPS[step]}</h1>

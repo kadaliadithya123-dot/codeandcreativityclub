@@ -2,11 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import {
   ArrowRight,
-  BarChart3,
+  BadgeCheck,
   Clock,
-  FileSpreadsheet,
   Layers,
-  ShieldCheck,
+  ListChecks,
+  MousePointerClick,
+  Send,
   Sparkles,
 } from "lucide-react";
 

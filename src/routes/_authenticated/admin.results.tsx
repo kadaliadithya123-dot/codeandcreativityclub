@@ -215,20 +215,21 @@ function ResultsPage() {
               <th className="px-4 py-3">Score</th>
               <th className="px-4 py-3">Time</th>
               <th className="px-4 py-3">Grade</th>
+              <th className="px-4 py-3">Answers</th>
               <th className="px-4 py-3 text-right print:hidden">Actions</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
                   Loading results…
                 </td>
               </tr>
             )}
             {!isLoading && rows.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
                   No results match these filters.
                 </td>
               </tr>
@@ -236,6 +237,7 @@ function ResultsPage() {
             {rows.map((row) => {
               const badge = performanceBadge(Number(row.percentage));
               return (
+                <>
                 <tr key={row.id} className="border-b border-border/40 last:border-0">
                   <td className="px-4 py-3">
                     <p className="font-medium">{row.students?.name}</p>
@@ -260,6 +262,20 @@ function ResultsPage() {
                   <td className="px-4 py-3">
                     <Badge variant="outline">{badge.label}</Badge>
                   </td>
+                  <td className="px-4 py-3">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setOpenId(openId === row.id ? null : row.id)}
+                    >
+                      {openId === row.id ? (
+                        <ChevronUp className="mr-1 size-4" />
+                      ) : (
+                        <ChevronDown className="mr-1 size-4" />
+                      )}
+                      Review
+                    </Button>
+                  </td>
                   <td className="px-4 py-3 text-right print:hidden">
                     <Button
                       variant="ghost"
@@ -271,6 +287,14 @@ function ResultsPage() {
                     </Button>
                   </td>
                 </tr>
+                {openId === row.id && (
+                  <tr key={`${row.id}-review`} className="border-b border-border/40">
+                    <td colSpan={7} className="bg-card/30 px-4 py-5">
+                      <ResultReview resultId={row.id} answers={row.answers ?? {}} />
+                    </td>
+                  </tr>
+                )}
+                </>
               );
             })}
           </tbody>
@@ -278,4 +302,54 @@ function ResultsPage() {
       </div>
     </div>
   );
+}
+
+function ResultReview({
+  resultId,
+  answers,
+}: {
+  resultId: string;
+  answers: Record<string, "A" | "B" | "C" | "D">;
+}) {
+  const questionIds = Object.keys(answers);
+
+  const { data: items = [], isLoading } = useQuery({
+    queryKey: ["admin", "result-review", resultId],
+    queryFn: async () => {
+      if (questionIds.length === 0) return [] as ReviewItem[];
+      const { data, error } = await supabase
+        .from("questions")
+        .select(
+          "id, question, option_a, option_b, option_c, option_d, correct_answer, marks, explanation",
+        )
+        .in("id", questionIds);
+      if (error) throw error;
+      return (data ?? []).map((q) => {
+        const given = answers[q.id] ?? null;
+        const isCorrect = given === q.correct_answer;
+        return {
+          id: q.id,
+          question: q.question,
+          options: [
+            { key: "A" as const, text: q.option_a },
+            { key: "B" as const, text: q.option_b },
+            { key: "C" as const, text: q.option_c },
+            { key: "D" as const, text: q.option_d },
+          ],
+          correct_answer: q.correct_answer,
+          student_answer: given,
+          is_correct: isCorrect,
+          marks: q.marks,
+          marks_awarded: isCorrect ? q.marks : 0,
+          explanation: q.explanation ?? null,
+        } satisfies ReviewItem;
+      });
+    },
+  });
+
+  if (isLoading) return <p className="text-sm text-muted-foreground">Loading answers…</p>;
+  if (items.length === 0)
+    return <p className="text-sm text-muted-foreground">No answer data stored for this attempt.</p>;
+
+  return <AnswerReview items={items} />;
 }

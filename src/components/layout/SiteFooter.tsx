@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <img src={logo} alt="" loading="lazy" width={32} height={32} className="size-8" />
-            <span className="font-display font-semibold">CodeAssess</span>
+            <span className="font-display font-semibold">Code&Creativity</span>
           </div>
           <p className="max-w-xs text-sm text-muted-foreground">
             A secure coding assessment portal built for diploma faculty and their students.

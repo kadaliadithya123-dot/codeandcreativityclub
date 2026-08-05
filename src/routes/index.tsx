@@ -15,7 +15,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
 
-const TITLE = "CodeAssess — Diploma Coding Assessment Portal";
+const TITLE = "Code&Creativity — Diploma Coding Assessment Portal";
 const DESCRIPTION =
   "Faculty-run coding quizzes for diploma students: year, branch and section aware tests, live timers, instant scores and rich result analytics.";
 
@@ -88,7 +88,7 @@ function Index() {
               </h1>
 
               <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
-                CodeAssess gives faculty one place to author question banks, publish tests to a
+                Code&Creativity gives faculty one place to author question banks, publish tests to a
                 specific year, branch and section, and read the results the minute the timer stops.
               </p>
 
@@ -136,7 +136,7 @@ function Index() {
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold sm:text-3xl">About the portal</h2>
               <p className="text-muted-foreground">
-                Built for polytechnic and diploma programmes, CodeAssess replaces scattered
+                Built for polytechnic and diploma programmes, Code&Creativity replaces scattered
                 spreadsheets and paper quizzes with a single workflow. Faculty maintain a question
                 bank tagged by year, department, section, subject and difficulty, then publish it as
                 a timed test.

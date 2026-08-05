@@ -11,7 +11,7 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="College emblem" width={36} height={36} className="size-9" />
           <span className="flex flex-col leading-tight">
-            <span className="font-display text-sm font-semibold tracking-tight">CodeAssess</span>
+            <span className="font-display text-sm font-semibold tracking-tight">Code&Creativity</span>
             <span className="text-[11px] text-muted-foreground">Diploma Assessment Portal</span>
           </span>
         </Link>

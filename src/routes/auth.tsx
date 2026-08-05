@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
-const TITLE = "Faculty login — CodeAssess";
+const TITLE = "Faculty login — Code&Creativity";
 const DESCRIPTION =
   "Secure sign in for diploma faculty to manage question banks, publish tests and review student results.";
 

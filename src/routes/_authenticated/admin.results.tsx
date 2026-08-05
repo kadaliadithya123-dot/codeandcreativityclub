@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, Printer, Search, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Download, Printer, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
+import { AnswerReview } from "@/components/result/AnswerReview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { DEPARTMENTS, YEARS, formatDuration, performanceBadge } from "@/lib/constants";
+import type { ReviewItem } from "@/lib/attempt-storage";
 
 export const Route = createFileRoute("/_authenticated/admin/results")({
   component: ResultsPage,
@@ -30,6 +32,7 @@ type ResultRow = {
   percentage: number;
   time_taken_seconds: number;
   submitted_at: string;
+  answers: Record<string, "A" | "B" | "C" | "D"> | null;
   students: {
     name: string;
     hall_ticket: string;
@@ -46,6 +49,7 @@ function ResultsPage() {
   const [year, setYear] = useState("all");
   const [department, setDepartment] = useState("all");
   const [sort, setSort] = useState("recent");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const { data: results = [], isLoading } = useQuery({
     queryKey: ["admin", "results"],
@@ -53,7 +57,7 @@ function ResultsPage() {
       const { data, error } = await supabase
         .from("results")
         .select(
-          "id, score, total_marks, correct, wrong, percentage, time_taken_seconds, submitted_at, students(name, hall_ticket, year, department, section), tests(title, subject)",
+          "id, score, total_marks, correct, wrong, percentage, time_taken_seconds, submitted_at, answers, students(name, hall_ticket, year, department, section), tests(title, subject)",
         )
         .order("submitted_at", { ascending: false });
       if (error) throw error;

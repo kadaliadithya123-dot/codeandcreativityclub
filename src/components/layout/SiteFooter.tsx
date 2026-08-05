@@ -12,8 +12,10 @@ export function SiteFooter() {
             <span className="font-display font-semibold">Code&Creativity</span>
           </div>
           <p className="max-w-xs text-sm text-muted-foreground">
-            A secure coding assessment portal built for diploma faculty and their students.
+            A secure coding assessment portal built for Smt. B. Seetha Polytechnic faculty and their
+            students.
           </p>
+          <p className="text-xs text-muted-foreground">Design by NextGenDevs</p>
         </div>
 
         <div className="space-y-2 text-sm">
@@ -35,7 +37,8 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/60 px-4 py-5 text-center text-xs text-muted-foreground">
-        &copy; {new Date().getFullYear()} Department of Technical Education. All rights reserved.
+        &copy; {new Date().getFullYear()} Smt. B. Seetha Polytechnic. All rights reserved. &middot;
+        Design by NextGenDevs
       </div>
     </footer>
   );

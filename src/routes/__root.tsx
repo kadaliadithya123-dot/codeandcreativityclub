@@ -81,6 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "Department of Technical Education" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { title: "code and creative club" },
+      { property: "og:title", content: "code and creative club" },
+      { name: "twitter:title", content: "code and creative club" },
+      { name: "description", content: "A web app for diploma colleges to conduct student coding quizzes and manage results." },
+      { property: "og:description", content: "A web app for diploma colleges to conduct student coding quizzes and manage results." },
+      { name: "twitter:description", content: "A web app for diploma colleges to conduct student coding quizzes and manage results." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a411b1c3-50cc-4f9f-ad38-6ee09ec9dfb4/id-preview-56a32747--7b5625ce-2bae-49c9-955c-6bb6ca032724.lovable.app-1785913078862.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a411b1c3-50cc-4f9f-ad38-6ee09ec9dfb4/id-preview-56a32747--7b5625ce-2bae-49c9-955c-6bb6ca032724.lovable.app-1785913078862.png" },
     ],
     links: [
       {

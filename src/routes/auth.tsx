@@ -70,9 +70,9 @@ function AuthPage() {
   return (
     <div className="hero-surface flex min-h-screen items-center justify-center px-4 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className="glass w-full max-w-md rounded-3xl p-8"
       >
         <div className="flex flex-col items-center text-center">

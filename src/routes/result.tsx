@@ -50,9 +50,9 @@ function ResultPage() {
       <SiteHeader />
       <main className="hero-surface px-4 py-12 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           className="mx-auto w-full max-w-3xl space-y-6"
         >
           <section className="glass rounded-3xl p-8 text-center">

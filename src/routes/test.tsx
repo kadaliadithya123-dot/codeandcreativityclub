@@ -92,7 +92,11 @@ function TestPage() {
           return;
         }
 
-        resultStore.set({ student: attempt.student, ...response.result });
+        resultStore.set({
+          student: attempt.student,
+          ...response.result,
+          review: response.review,
+        });
         attemptStore.clear();
         toast.success(auto ? "Time is up — your test was submitted." : "Test submitted");
         navigate({ to: "/result", replace: true });

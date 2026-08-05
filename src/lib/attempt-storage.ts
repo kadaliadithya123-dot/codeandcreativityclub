@@ -32,6 +32,7 @@ export type Attempt = {
   questions: AttemptQuestion[];
   answers: Record<string, "A" | "B" | "C" | "D">;
   startedAt: number;
+  attemptToken: string;
 };
 
 export type ReviewItem = {

@@ -90,6 +90,7 @@ function StartPage() {
         questions: response.questions,
         answers: {},
         startedAt: Date.now(),
+        attemptToken: response.attempt_token,
       });
       navigate({ to: "/test" });
     } catch {

@@ -23,6 +23,7 @@ import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminStudentsRouteImport } from './routes/_authenticated/admin.students'
 import { Route as AuthenticatedAdminTestsRouteImport } from './routes/_authenticated/admin.tests'
 import { Route as AuthenticatedAdminTestsIndexRouteImport } from './routes/_authenticated/admin.tests.index'
+import { Route as AuthenticatedAdminTestsTestIdRouteImport } from './routes/_authenticated/admin.tests.$testId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -98,6 +99,12 @@ const AuthenticatedAdminTestsIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAdminTestsRoute,
   } as any)
+const AuthenticatedAdminTestsTestIdRoute =
+  AuthenticatedAdminTestsTestIdRouteImport.update({
+    id: '/$testId',
+    path: '/$testId',
+    getParentRoute: () => AuthenticatedAdminTestsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
   '/admin/tests': typeof AuthenticatedAdminTestsRouteWithChildren
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
   '/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
   '/admin/tests': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesById {
@@ -142,6 +151,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/students': typeof AuthenticatedAdminStudentsRoute
   '/_authenticated/admin/tests': typeof AuthenticatedAdminTestsRouteWithChildren
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
   '/_authenticated/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRouteTypes {
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/admin/students'
     | '/admin/tests'
     | '/admin/'
+    | '/admin/tests/$testId'
     | '/admin/tests/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/students'
     | '/admin'
+    | '/admin/tests/$testId'
     | '/admin/tests'
   id:
     | '__root__'
@@ -188,6 +200,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/students'
     | '/_authenticated/admin/tests'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/tests/$testId'
     | '/_authenticated/admin/tests/'
   fileRoutesById: FileRoutesById
 }
@@ -300,15 +313,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminTestsIndexRouteImport
       parentRoute: typeof AuthenticatedAdminTestsRoute
     }
+    '/_authenticated/admin/tests/$testId': {
+      id: '/_authenticated/admin/tests/$testId'
+      path: '/$testId'
+      fullPath: '/admin/tests/$testId'
+      preLoaderRoute: typeof AuthenticatedAdminTestsTestIdRouteImport
+      parentRoute: typeof AuthenticatedAdminTestsRoute
+    }
   }
 }
 
 interface AuthenticatedAdminTestsRouteChildren {
+  AuthenticatedAdminTestsTestIdRoute: typeof AuthenticatedAdminTestsTestIdRoute
   AuthenticatedAdminTestsIndexRoute: typeof AuthenticatedAdminTestsIndexRoute
 }
 
 const AuthenticatedAdminTestsRouteChildren: AuthenticatedAdminTestsRouteChildren =
   {
+    AuthenticatedAdminTestsTestIdRoute: AuthenticatedAdminTestsTestIdRoute,
     AuthenticatedAdminTestsIndexRoute: AuthenticatedAdminTestsIndexRoute,
   }
 
@@ -360,3 +382,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

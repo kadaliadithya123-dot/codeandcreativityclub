@@ -34,6 +34,18 @@ export type Attempt = {
   startedAt: number;
 };
 
+export type ReviewItem = {
+  id: string;
+  question: string;
+  options: { key: "A" | "B" | "C" | "D"; text: string }[];
+  correct_answer: string;
+  student_answer: string | null;
+  is_correct: boolean;
+  marks: number;
+  marks_awarded: number;
+  explanation: string | null;
+};
+
 export type AttemptResult = {
   student: AttemptStudent;
   score: number;
@@ -44,6 +56,7 @@ export type AttemptResult = {
   time_taken_seconds: number;
   test_title: string;
   subject: string;
+  review?: ReviewItem[];
 };
 
 const ATTEMPT_KEY = "portal-attempt";

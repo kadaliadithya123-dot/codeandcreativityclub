@@ -165,22 +165,53 @@ export const submitAttempt = createServerFn({ method: "POST" })
 
     const { data: questions } = await supabaseAdmin
       .from("questions")
-      .select("id, correct_answer, marks")
+      .select(
+        "id, question, option_a, option_b, option_c, option_d, correct_answer, marks, explanation",
+      )
       .in("id", questionIds.length > 0 ? questionIds : ["00000000-0000-0000-0000-000000000000"]);
 
     let score = 0;
     let totalMarks = 0;
     let correct = 0;
     let wrong = 0;
+    const review: {
+      id: string;
+      question: string;
+      options: { key: "A" | "B" | "C" | "D"; text: string }[];
+      correct_answer: string;
+      student_answer: string | null;
+      is_correct: boolean;
+      marks: number;
+      marks_awarded: number;
+      explanation: string | null;
+    }[] = [];
 
     for (const q of questions ?? []) {
       totalMarks += q.marks;
-      if (data.answers[q.id] === q.correct_answer) {
+      const given = data.answers[q.id] ?? null;
+      const isCorrect = given === q.correct_answer;
+      if (isCorrect) {
         score += q.marks;
         correct += 1;
       } else {
         wrong += 1;
       }
+      review.push({
+        id: q.id,
+        question: q.question,
+        options: [
+          { key: "A", text: q.option_a },
+          { key: "B", text: q.option_b },
+          { key: "C", text: q.option_c },
+          { key: "D", text: q.option_d },
+        ],
+        correct_answer: q.correct_answer,
+        student_answer: given,
+        is_correct: isCorrect,
+        marks: q.marks,
+        marks_awarded: isCorrect ? q.marks : 0,
+        explanation: q.explanation ?? null,
+      });
     }
 
     const percentage = totalMarks > 0 ? Number(((score / totalMarks) * 100).toFixed(2)) : 0;
@@ -215,5 +246,6 @@ export const submitAttempt = createServerFn({ method: "POST" })
         test_title: test.title,
         subject: test.subject,
       },
+      review,
     };
   });

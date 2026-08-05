@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { CheckCircle2, Home, Printer, XCircle } from "lucide-react";
 
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { AnswerReview } from "@/components/result/AnswerReview";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatDuration, performanceBadge } from "@/lib/constants";
@@ -107,6 +108,18 @@ function ResultPage() {
               </div>
             </div>
           </section>
+
+          {result.review && result.review.length > 0 && (
+            <section className="glass space-y-4 rounded-3xl p-6">
+              <div>
+                <h2 className="text-lg font-semibold">Question-wise review</h2>
+                <p className="text-sm text-muted-foreground">
+                  Every question with your answer, the correct answer and the solution.
+                </p>
+              </div>
+              <AnswerReview items={result.review} />
+            </section>
+          )}
 
           <div className="flex flex-wrap justify-center gap-3 print:hidden">
             <Button asChild variant="outline" className="rounded-full">

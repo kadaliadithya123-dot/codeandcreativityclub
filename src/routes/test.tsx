@@ -188,9 +188,9 @@ function TestPage() {
       <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_240px]">
         <motion.section
           key={question.id}
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.28 }}
+          transition={{ duration: 0.16, ease: "easeOut" }}
           className="glass rounded-3xl p-6 sm:p-8"
         >
           <div className="flex items-center gap-3">
@@ -217,7 +217,7 @@ function TestPage() {
                   type="button"
                   onClick={() => selectOption(key)}
                   className={cn(
-                    "flex w-full items-start gap-3 rounded-2xl border p-4 text-left transition-all hover:border-primary/60",
+                    "flex w-full items-start gap-3 rounded-2xl border p-4 text-left transition-colors duration-100 hover:border-primary/60 active:border-primary",
                     active
                       ? "border-primary bg-primary/10 shadow-glow"
                       : "border-border bg-card/40",

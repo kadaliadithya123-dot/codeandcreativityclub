@@ -75,7 +75,7 @@ function Index() {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
               className="space-y-7"
             >
               <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground">
@@ -117,20 +117,17 @@ function Index() {
               </dl>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="glass animate-float rounded-3xl p-3"
-            >
+            <div className="glass rounded-3xl p-3">
               <img
                 src={heroImage}
                 alt="Diploma students taking an online coding assessment on laptops"
-                width={1280}
-                height={960}
+                width={1100}
+                height={825}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full rounded-2xl"
               />
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -173,10 +170,10 @@ function Index() {
             {FEATURES.map((feature, index) => (
               <motion.article
                 key={feature.title}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.25, delay: Math.min(index, 3) * 0.03 }}
                 className="glass rounded-2xl p-6"
               >
                 <feature.icon className="size-6 text-primary" />

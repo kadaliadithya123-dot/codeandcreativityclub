@@ -131,9 +131,9 @@ function StartPage() {
 
           <motion.section
             key={step}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
             className="glass rounded-3xl p-6 sm:p-8"
           >
             <h1 className="text-2xl font-semibold">{STEPS[step]}</h1>
@@ -260,7 +260,7 @@ function OptionGrid({
           type="button"
           onClick={() => onSelect(option.value)}
           className={cn(
-            "rounded-2xl border p-4 text-left transition-all hover:border-primary/60 hover:bg-primary/5",
+            "rounded-2xl border p-4 text-left transition-colors duration-100 hover:border-primary/60 hover:bg-primary/5 active:border-primary",
             selected === option.value
               ? "border-primary bg-primary/10 shadow-glow"
               : "border-border bg-card/40",

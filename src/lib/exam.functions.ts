@@ -163,6 +163,11 @@ export const submitAttempt = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+    // Only the browser that started this exact attempt may submit it.
+    const { verifyAttemptToken } = await import("./attempt-token.server");
+    const tokenOk = await verifyAttemptToken(data.attempt_token, data.student_id, data.test_id);
+    if (!tokenOk) return { ok: false as const, reason: "invalid_attempt" as const };
+
     const questionIds = Object.keys(data.answers);
     const { data: test } = await supabaseAdmin
       .from("tests")

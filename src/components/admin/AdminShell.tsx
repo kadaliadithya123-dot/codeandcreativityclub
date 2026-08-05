@@ -62,7 +62,7 @@ export function AdminShell() {
             <div className="flex items-center gap-2 px-3 py-4">
               <img src={logo} alt="" width={28} height={28} className="size-7" />
               <span className="font-display text-sm font-semibold group-data-[collapsible=icon]:hidden">
-                CodeAssess
+                Code&Creativity
               </span>
             </div>
             <SidebarGroup>

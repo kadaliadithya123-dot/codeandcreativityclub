@@ -14,7 +14,7 @@ import { attemptStore } from "@/lib/attempt-storage";
 import { startAttempt } from "@/lib/exam.functions";
 import { cn } from "@/lib/utils";
 
-const TITLE = "Start your test — CodeAssess";
+const TITLE = "Start your test — Code&Creativity";
 const DESCRIPTION =
   "Select your academic year, department and section, confirm your hall ticket details and begin the coding test assigned to your class.";
 

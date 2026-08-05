@@ -26,9 +26,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/test")({
   head: () => ({
     meta: [
-      { title: "Test in progress — CodeAssess" },
+      { title: "Test in progress — Code&Creativity" },
       { name: "description", content: "Answer your assigned coding test before the timer ends." },
-      { property: "og:title", content: "Test in progress — CodeAssess" },
+      { property: "og:title", content: "Test in progress — Code&Creativity" },
       {
         property: "og:description",
         content: "Answer your assigned coding test before the timer ends.",

@@ -109,10 +109,6 @@ function ResultPage() {
             </div>
           </section>
 
-          <div className="flex flex-wrap justify-center gap-3 print:hidden">
-            {/* actions */}
-          </div>
-
           {result.review && result.review.length > 0 && (
             <section className="glass space-y-4 rounded-3xl p-6">
               <div>

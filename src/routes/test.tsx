@@ -307,7 +307,14 @@ function TestPage() {
           <AlertDialogFooter>
             <AlertDialogCancel>Keep answering</AlertDialogCancel>
             <AlertDialogAction onClick={() => void handleSubmit(false)} disabled={submitting}>
-              {submitting ? <Loader2 className="size-4 animate-spin" /> : "Submit test"}
+              {submitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  <span className="sr-only">Submitting your test…</span>
+                </>
+              ) : (
+                "Submit test"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

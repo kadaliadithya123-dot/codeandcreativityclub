@@ -106,7 +106,14 @@ function AuthPage() {
             Credentials are issued by the exam cell — there is no self-service registration.
           </p>
           <Button type="submit" className="w-full rounded-full" disabled={busy}>
-            {busy ? <Loader2 className="size-4 animate-spin" /> : "Sign in"}
+            {busy ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span className="sr-only">Signing in…</span>
+              </>
+            ) : (
+              "Sign in"
+            )}
           </Button>
         </form>
 

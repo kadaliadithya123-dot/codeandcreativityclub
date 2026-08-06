@@ -28,7 +28,7 @@ const startSchema = scopeSchema.extend({
 const submitSchema = z.object({
   student_id: z.string().uuid(),
   test_id: z.string().uuid(),
-  attempt_token: z.string().min(20).max(500),
+  attempt_token: z.string().min(20).max(20000),
   time_taken_seconds: z.number().int().min(0).max(60 * 60 * 8),
   answers: z.record(z.string().uuid(), z.enum(["A", "B", "C", "D"])),
 });
@@ -140,7 +140,11 @@ export const startAttempt = createServerFn({ method: "POST" })
     pool = pool.slice(0, Math.max(1, test.question_count));
 
     const { issueAttemptToken } = await import("./attempt-token.server");
-    const attemptToken = await issueAttemptToken(student.id, test.id);
+    const attemptToken = await issueAttemptToken(
+      student.id,
+      test.id,
+      pool.map((q) => q.id),
+    );
 
     return {
       ok: true as const,
@@ -165,10 +169,13 @@ export const submitAttempt = createServerFn({ method: "POST" })
 
     // Only the browser that started this exact attempt may submit it.
     const { verifyAttemptToken } = await import("./attempt-token.server");
-    const tokenOk = await verifyAttemptToken(data.attempt_token, data.student_id, data.test_id);
-    if (!tokenOk) return { ok: false as const, reason: "invalid_attempt" as const };
+    const claims = await verifyAttemptToken(data.attempt_token, data.student_id, data.test_id);
+    if (!claims) return { ok: false as const, reason: "invalid_attempt" as const };
 
-    const questionIds = Object.keys(data.answers);
+    // Grade over every question assigned at start time, not just the answered
+    // ones — otherwise skipped questions vanish from totals and the review.
+    const assignedIds = claims.qids?.length ? claims.qids : Object.keys(data.answers);
+    const questionIds = assignedIds;
     const { data: test } = await supabaseAdmin
       .from("tests")
       .select("id, title, subject")
@@ -237,6 +244,11 @@ export const submitAttempt = createServerFn({ method: "POST" })
 
     const percentage = totalMarks > 0 ? Number(((score / totalMarks) * 100).toFixed(2)) : 0;
 
+    // Persist an entry for every assigned question (null = skipped) so faculty
+    // reviews can list the questions the student never answered.
+    const storedAnswers: Record<string, "A" | "B" | "C" | "D" | null> = {};
+    for (const q of questions ?? []) storedAnswers[q.id] = data.answers[q.id] ?? null;
+
     const { data: result, error } = await supabaseAdmin
       .from("results")
       .insert({
@@ -248,7 +260,7 @@ export const submitAttempt = createServerFn({ method: "POST" })
         correct,
         wrong,
         time_taken_seconds: data.time_taken_seconds,
-        answers: data.answers,
+        answers: storedAnswers,
       })
       .select("*")
       .single();

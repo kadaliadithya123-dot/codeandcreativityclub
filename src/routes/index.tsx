@@ -27,6 +27,19 @@ export const Route = createFileRoute("/")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: "https://codeandcreativityclub.lovable.app/" },
+    ],
+    links: [{ rel: "canonical", href: "https://codeandcreativityclub.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Code&Creativity",
+          url: "https://codeandcreativityclub.lovable.app",
+        }),
+      },
     ],
   }),
   component: Index,

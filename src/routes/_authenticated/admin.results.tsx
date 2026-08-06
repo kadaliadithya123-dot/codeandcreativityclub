@@ -32,7 +32,7 @@ type ResultRow = {
   percentage: number;
   time_taken_seconds: number;
   submitted_at: string;
-  answers: Record<string, "A" | "B" | "C" | "D"> | null;
+  answers: Record<string, "A" | "B" | "C" | "D" | null> | null;
   students: {
     name: string;
     hall_ticket: string;
@@ -309,7 +309,7 @@ function ResultReview({
   answers,
 }: {
   resultId: string;
-  answers: Record<string, "A" | "B" | "C" | "D">;
+  answers: Record<string, "A" | "B" | "C" | "D" | null>;
 }) {
   const questionIds = Object.keys(answers);
 

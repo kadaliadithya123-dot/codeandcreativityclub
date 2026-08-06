@@ -216,7 +216,10 @@ function StartPage() {
                     onClick={handleContinue}
                   >
                     {submitting ? (
-                      <Loader2 className="size-4 animate-spin" />
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        <span className="sr-only">Loading your test…</span>
+                      </>
                     ) : (
                       <>
                         Continue <ArrowRight className="ml-1 size-4" />

@@ -59,7 +59,7 @@ function ResultPage() {
           <section className="glass rounded-3xl p-8 text-center">
             <p className="text-sm text-muted-foreground">{result.test_title}</p>
             <h1 className="mt-2 text-4xl font-semibold">
-              <span className="gradient-text">{result.percentage}%</span>
+              Test Result — <span className="gradient-text">{result.percentage}%</span>
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {result.score} of {result.total_marks} marks

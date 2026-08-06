@@ -103,6 +103,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Code&Creativity",
+          url: "https://codeandcreativityclub.lovable.app",
+          logo: "https://codeandcreativityclub.lovable.app/favicon.png",
+          parentOrganization: {
+            "@type": "CollegeOrUniversity",
+            name: "Smt. B. Seetha Polytechnic",
+          },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

@@ -13,6 +13,8 @@ type AttemptClaims = {
   sid: string;
   tid: string;
   exp: number;
+  /** Ids of every question assigned for this attempt, so grading covers skipped ones. */
+  qids?: string[];
 };
 
 function getSecret(): string {
@@ -42,35 +44,40 @@ async function sign(payload: string): Promise<string> {
   return base64UrlEncode(new Uint8Array(signature));
 }
 
-export async function issueAttemptToken(studentId: string, testId: string): Promise<string> {
+export async function issueAttemptToken(
+  studentId: string,
+  testId: string,
+  questionIds: string[] = [],
+): Promise<string> {
   const claims: AttemptClaims = {
     sid: studentId,
     tid: testId,
     exp: Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS,
+    qids: questionIds,
   };
   const payload = base64UrlEncode(new TextEncoder().encode(JSON.stringify(claims)));
   return `${payload}.${await sign(payload)}`;
 }
 
-/** Returns true only for an unexpired token issued for exactly this student + test. */
+/** Returns the claims only for an unexpired token issued for exactly this student + test. */
 export async function verifyAttemptToken(
   token: string,
   studentId: string,
   testId: string,
-): Promise<boolean> {
+): Promise<AttemptClaims | null> {
   const [payload, signature] = token.split('.');
-  if (!payload || !signature) return false;
+  if (!payload || !signature) return null;
 
   const expected = await sign(payload);
-  if (expected.length !== signature.length || expected !== signature) return false;
+  if (expected.length !== signature.length || expected !== signature) return null;
 
   try {
     const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
     const claims = JSON.parse(json) as AttemptClaims;
-    if (claims.sid !== studentId || claims.tid !== testId) return false;
-    if (typeof claims.exp !== 'number' || claims.exp * 1000 < Date.now()) return false;
-    return true;
+    if (claims.sid !== studentId || claims.tid !== testId) return null;
+    if (typeof claims.exp !== 'number' || claims.exp * 1000 < Date.now()) return null;
+    return claims;
   } catch {
-    return false;
+    return null;
   }
 }

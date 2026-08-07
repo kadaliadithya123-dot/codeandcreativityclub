@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { Loader2, Lock, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 
 import logo from "@/assets/college-logo.png";
@@ -35,6 +35,7 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(REMEMBER_KEY);
@@ -88,10 +89,19 @@ function AuthPage() {
           <Field
             id="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             onChange={setPassword}
-          />
+          >
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+            </button>
+          </Field>
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2 text-muted-foreground">
               <Checkbox
@@ -134,23 +144,29 @@ function Field({
   value,
   onChange,
   type = "text",
+  children,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (value: string) => void;
   type?: string;
+  children?: React.ReactNode;
 }) {
   return (
     <div className="space-y-2">
       <Label htmlFor={id}>{label}</Label>
-      <Input
-        id={id}
-        type={type}
-        value={value}
-        required
-        onChange={(event) => onChange(event.target.value)}
-      />
+      <div className="relative">
+        <Input
+          id={id}
+          type={type}
+          value={value}
+          required
+          onChange={(event) => onChange(event.target.value)}
+          className={children ? "pr-10" : undefined}
+        />
+        {children}
+      </div>
     </div>
   );
 }

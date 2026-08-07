@@ -56,7 +56,7 @@ function ResultsPage() {
   const [year, setYear] = useState("all");
   const [department, setDepartment] = useState("all");
   const [sort, setSort] = useState("recent");
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [reviewRow, setReviewRow] = useState<ResultRow | null>(null);
 
   const { data: results = [], isLoading } = useQuery({
     queryKey: ["admin", "results"],
@@ -244,8 +244,7 @@ function ResultsPage() {
             {rows.map((row) => {
               const badge = performanceBadge(Number(row.percentage));
               return (
-                <Fragment key={row.id}>
-                <tr className="border-b border-border/40 last:border-0">
+                <tr key={row.id} className="border-b border-border/40 last:border-0">
                   <td className="px-4 py-3">
                     <p className="font-medium">{row.students?.name}</p>
                     <p className="text-xs text-muted-foreground">
@@ -270,16 +269,8 @@ function ResultsPage() {
                     <Badge variant="outline">{badge.label}</Badge>
                   </td>
                   <td className="px-4 py-3">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setOpenId(openId === row.id ? null : row.id)}
-                    >
-                      {openId === row.id ? (
-                        <ChevronUp className="mr-1 size-4" />
-                      ) : (
-                        <ChevronDown className="mr-1 size-4" />
-                      )}
+                    <Button variant="ghost" size="sm" onClick={() => setReviewRow(row)}>
+                      <Eye className="mr-1 size-4" />
                       Review
                     </Button>
                   </td>
@@ -294,19 +285,28 @@ function ResultsPage() {
                     </Button>
                   </td>
                 </tr>
-                {openId === row.id && (
-                  <tr key={`${row.id}-review`} className="border-b border-border/40">
-                    <td colSpan={7} className="bg-card/30 px-4 py-5">
-                      <ResultReview resultId={row.id} answers={row.answers ?? {}} />
-                    </td>
-                  </tr>
-                )}
-                </Fragment>
               );
             })}
           </tbody>
         </table>
       </div>
+
+      <Dialog open={!!reviewRow} onOpenChange={(open) => !open && setReviewRow(null)}>
+        <DialogContent className="max-h-[85vh] max-w-3xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {reviewRow?.students?.name} — {reviewRow?.tests?.title}
+            </DialogTitle>
+            <DialogDescription>
+              {reviewRow?.students?.hall_ticket} · Score {reviewRow?.score}/
+              {reviewRow?.total_marks} ({reviewRow?.percentage}%)
+            </DialogDescription>
+          </DialogHeader>
+          {reviewRow && (
+            <ResultReview resultId={reviewRow.id} answers={reviewRow.answers ?? {}} />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

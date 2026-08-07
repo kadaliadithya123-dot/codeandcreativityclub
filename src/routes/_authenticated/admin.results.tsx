@@ -1,12 +1,19 @@
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ChevronDown, ChevronUp, Download, Printer, Search, Trash2 } from "lucide-react";
+import { Download, Eye, Printer, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { AnswerReview } from "@/components/result/AnswerReview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,

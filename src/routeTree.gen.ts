@@ -23,8 +23,10 @@ import { Route as AuthenticatedAdminResultsRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminStudentsRouteImport } from './routes/_authenticated/admin.students'
 import { Route as AuthenticatedAdminTestsRouteImport } from './routes/_authenticated/admin.tests'
+import { Route as AuthenticatedAdminWebsiteRouteImport } from './routes/_authenticated/admin.website'
 import { Route as AuthenticatedAdminTestsIndexRouteImport } from './routes/_authenticated/admin.tests.index'
 import { Route as AuthenticatedAdminTestsTestIdRouteImport } from './routes/_authenticated/admin.tests.$testId'
+import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -99,6 +101,12 @@ const AuthenticatedAdminTestsRoute = AuthenticatedAdminTestsRouteImport.update({
   path: '/tests',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminWebsiteRoute =
+  AuthenticatedAdminWebsiteRouteImport.update({
+    id: '/website',
+    path: '/website',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminTestsIndexRoute =
   AuthenticatedAdminTestsIndexRouteImport.update({
     id: '/',
@@ -111,6 +119,11 @@ const AuthenticatedAdminTestsTestIdRoute =
     path: '/$testId',
     getParentRoute: () => AuthenticatedAdminTestsRoute,
   } as any)
+const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
+  id: '/api/public/media/$',
+  path: '/api/public/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,8 +138,10 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
   '/admin/tests': typeof AuthenticatedAdminTestsRouteWithChildren
+  '/admin/website': typeof AuthenticatedAdminWebsiteRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -140,8 +155,10 @@ export interface FileRoutesByTo {
   '/admin/results': typeof AuthenticatedAdminResultsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/students': typeof AuthenticatedAdminStudentsRoute
+  '/admin/website': typeof AuthenticatedAdminWebsiteRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/admin/tests': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRoutesById {
@@ -159,8 +176,10 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/students': typeof AuthenticatedAdminStudentsRoute
   '/_authenticated/admin/tests': typeof AuthenticatedAdminTestsRouteWithChildren
+  '/_authenticated/admin/website': typeof AuthenticatedAdminWebsiteRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/tests/$testId': typeof AuthenticatedAdminTestsTestIdRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
   '/_authenticated/admin/tests/': typeof AuthenticatedAdminTestsIndexRoute
 }
 export interface FileRouteTypes {
@@ -178,8 +197,10 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/students'
     | '/admin/tests'
+    | '/admin/website'
     | '/admin/'
     | '/admin/tests/$testId'
+    | '/api/public/media/$'
     | '/admin/tests/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -193,8 +214,10 @@ export interface FileRouteTypes {
     | '/admin/results'
     | '/admin/settings'
     | '/admin/students'
+    | '/admin/website'
     | '/admin'
     | '/admin/tests/$testId'
+    | '/api/public/media/$'
     | '/admin/tests'
   id:
     | '__root__'
@@ -211,8 +234,10 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/students'
     | '/_authenticated/admin/tests'
+    | '/_authenticated/admin/website'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/tests/$testId'
+    | '/api/public/media/$'
     | '/_authenticated/admin/tests/'
   fileRoutesById: FileRoutesById
 }
@@ -224,6 +249,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StartRoute: typeof StartRoute
   TestRoute: typeof TestRoute
+  ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -326,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminTestsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/website': {
+      id: '/_authenticated/admin/website'
+      path: '/website'
+      fullPath: '/admin/website'
+      preLoaderRoute: typeof AuthenticatedAdminWebsiteRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/tests/': {
       id: '/_authenticated/admin/tests/'
       path: '/'
@@ -339,6 +372,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/tests/$testId'
       preLoaderRoute: typeof AuthenticatedAdminTestsTestIdRouteImport
       parentRoute: typeof AuthenticatedAdminTestsRoute
+    }
+    '/api/public/media/$': {
+      id: '/api/public/media/$'
+      path: '/api/public/media/$'
+      fullPath: '/api/public/media/$'
+      preLoaderRoute: typeof ApiPublicMediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -365,6 +405,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminStudentsRoute: typeof AuthenticatedAdminStudentsRoute
   AuthenticatedAdminTestsRoute: typeof AuthenticatedAdminTestsRouteWithChildren
+  AuthenticatedAdminWebsiteRoute: typeof AuthenticatedAdminWebsiteRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
@@ -374,6 +415,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminStudentsRoute: AuthenticatedAdminStudentsRoute,
   AuthenticatedAdminTestsRoute: AuthenticatedAdminTestsRouteWithChildren,
+  AuthenticatedAdminWebsiteRoute: AuthenticatedAdminWebsiteRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
@@ -399,6 +441,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StartRoute: StartRoute,
   TestRoute: TestRoute,
+  ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

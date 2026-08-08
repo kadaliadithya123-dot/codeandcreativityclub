@@ -1,12 +1,19 @@
 import { CalendarDays, Clock, MapPin, Target, Users, Mail, Phone, IdCard } from "lucide-react";
 
-import { CALENDAR, CLUB, EVENTS, MEMBERS, PRESIDENT, type Member } from "@/lib/club-data";
+import type {
+  CalendarContent,
+  ClubEvent,
+  ClubInfo,
+  ClubMember,
+} from "@/lib/site-content";
 
-export function ClubAbout() {
+export function ClubAbout({ club }: { club: ClubInfo }) {
+  const CLUB = club;
   return (
     <section id="club" className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div className="glass overflow-hidden rounded-3xl p-3">
+        {CLUB.posterUrl ? (
+          <div className="glass overflow-hidden rounded-3xl p-3">
           <img
             src={CLUB.posterUrl}
             alt={`${CLUB.name} ${CLUB.academicYear} official poster of ${CLUB.college}`}
@@ -14,7 +21,8 @@ export function ClubAbout() {
             decoding="async"
             className="w-full rounded-2xl"
           />
-        </div>
+          </div>
+        ) : null}
 
         <div className="space-y-6">
           <div className="space-y-2">
@@ -68,13 +76,12 @@ export function ClubAbout() {
   );
 }
 
-export function ClubCalendar() {
+export function ClubCalendar({ calendar }: { calendar: CalendarContent }) {
+  if (calendar.rows.length === 0) return null;
   return (
     <section id="calendar" className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-      <h2 className="text-2xl font-semibold sm:text-3xl">Monthly calendar {CLUB.academicYear}</h2>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Events planned and conducted by the {CLUB.name} for the academic year {CLUB.academicYear}.
-      </p>
+      <h2 className="text-2xl font-semibold sm:text-3xl">{calendar.heading}</h2>
+      <p className="mt-2 text-sm text-muted-foreground">{calendar.intro}</p>
 
       <div className="glass mt-6 overflow-x-auto rounded-2xl">
         <table className="w-full min-w-[540px] text-left text-sm">
@@ -87,9 +94,9 @@ export function ClubCalendar() {
             </tr>
           </thead>
           <tbody>
-            {CALENDAR.map((row) => (
-              <tr key={row.no} className="border-b border-border/40 last:border-0">
-                <td className="px-5 py-3 text-muted-foreground">{row.no}</td>
+            {calendar.rows.map((row, index) => (
+              <tr key={`${row.event}-${index}`} className="border-b border-border/40 last:border-0">
+                <td className="px-5 py-3 text-muted-foreground">{index + 1}</td>
                 <td className="px-5 py-3 font-medium">{row.event}</td>
                 <td className="px-5 py-3 text-muted-foreground">{row.date}</td>
                 <td className="px-5 py-3 text-muted-foreground">{row.day}</td>
@@ -102,7 +109,8 @@ export function ClubCalendar() {
   );
 }
 
-export function ClubEvents() {
+export function ClubEvents({ events }: { events: ClubEvent[] }) {
+  if (events.length === 0) return null;
   return (
     <section id="events" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
       <h2 className="text-2xl font-semibold sm:text-3xl">Events conducted</h2>
@@ -112,18 +120,20 @@ export function ClubEvents() {
       </p>
 
       <div className="mt-8 space-y-10">
-        {EVENTS.map((event) => (
-          <article key={event.slug} className="glass rounded-3xl p-6 sm:p-8">
+        {events.map((event) => (
+          <article key={event.id} className="glass rounded-3xl p-6 sm:p-8">
             <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-              <div className="overflow-hidden rounded-2xl border border-border/60">
+              {event.poster_url ? (
+                <div className="overflow-hidden rounded-2xl border border-border/60">
                 <img
-                  src={event.poster}
+                  src={event.poster_url}
                   alt={`${event.title} event poster`}
                   loading="lazy"
                   decoding="async"
                   className="w-full"
                 />
-              </div>
+                </div>
+              ) : null}
 
               <div className="space-y-5">
                 <div>
@@ -135,10 +145,10 @@ export function ClubEvents() {
 
                 <dl className="grid gap-3 text-sm sm:grid-cols-2">
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <CalendarDays className="size-4 text-primary" /> {event.date}
+                    <CalendarDays className="size-4 text-primary" /> {event.event_date}
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="size-4 text-primary" /> {event.time}
+                    <Clock className="size-4 text-primary" /> {event.event_time}
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <MapPin className="size-4 text-primary" /> {event.venue}
@@ -165,7 +175,7 @@ export function ClubEvents() {
                 <div>
                   <h4 className="text-sm font-semibold">Resource person(s)</h4>
                   <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                    {event.resourcePersons.map((r) => (
+                    {event.resource_persons.map((r) => (
                       <li key={r}>{r}</li>
                     ))}
                   </ul>
@@ -202,49 +212,76 @@ export function ClubEvents() {
   );
 }
 
-function MemberCard({ member, featured = false }: { member: Member; featured?: boolean }) {
+function MemberCard({ member }: { member: ClubMember }) {
+  const featured = member.featured;
   return (
     <div
       className={`glass rounded-2xl p-6 ${featured ? "border-primary/40 ring-1 ring-primary/30" : ""}`}
     >
-      <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">{member.role}</p>
+      {member.photo_url ? (
+        <img
+          src={member.photo_url}
+          alt={`${member.name}, ${member.role_title}`}
+          loading="lazy"
+          decoding="async"
+          className="mb-4 size-20 rounded-full object-cover"
+        />
+      ) : null}
+      <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
+        {member.role_title}
+      </p>
       <h3 className={`mt-2 font-semibold ${featured ? "text-xl" : "text-base"}`}>{member.name}</h3>
       <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-        <li className="flex items-center gap-2">
-          <IdCard className="size-4 text-primary" /> {member.pin}
-        </li>
+        {member.pin ? (
+          <li className="flex items-center gap-2">
+            <IdCard className="size-4 text-primary" /> {member.pin}
+          </li>
+        ) : null}
+        {member.email ? (
         <li className="flex items-center gap-2 break-all">
           <Mail className="size-4 shrink-0 text-primary" />
           <a href={`mailto:${member.email}`} className="hover:text-foreground">
             {member.email}
           </a>
         </li>
+        ) : null}
+        {member.phone ? (
         <li className="flex items-center gap-2">
           <Phone className="size-4 text-primary" />
           <a href={`tel:+91${member.phone}`} className="hover:text-foreground">
             +91 {member.phone}
           </a>
         </li>
+        ) : null}
       </ul>
     </div>
   );
 }
 
-export function ClubTeam() {
+export function ClubTeam({ members, club }: { members: ClubMember[]; club: ClubInfo }) {
+  if (members.length === 0) return null;
+  const featured = members.filter((m) => m.featured);
+  const rest = members.filter((m) => !m.featured);
   return (
     <section id="team" className="mx-auto w-full max-w-6xl px-4 pb-20 pt-8 sm:px-6">
       <h2 className="text-2xl font-semibold sm:text-3xl">Club leadership &amp; team</h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-        Student office bearers of the {CLUB.name}, {CLUB.college} for {CLUB.academicYear}.
+        Student office bearers of the {club.name}, {club.college} for {club.academicYear}.
       </p>
 
       <div className="mt-8 grid gap-5 lg:grid-cols-4">
-        <div className="lg:col-span-1">
-          <MemberCard member={PRESIDENT} featured />
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3">
-          {MEMBERS.map((member) => (
-            <MemberCard key={member.pin} member={member} />
+        {featured.length > 0 ? (
+          <div className="grid gap-5 lg:col-span-1">
+            {featured.map((member) => (
+              <MemberCard key={member.id} member={member} />
+            ))}
+          </div>
+        ) : null}
+        <div
+          className={`grid gap-5 sm:grid-cols-2 lg:grid-cols-3 ${featured.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}`}
+        >
+          {rest.map((member) => (
+            <MemberCard key={member.id} member={member} />
           ))}
         </div>
       </div>

@@ -14,6 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
+      club_events: {
+        Row: {
+          audience: string
+          created_at: string
+          event_date: string
+          event_time: string
+          highlights: Json
+          id: string
+          kind: string
+          photos: Json
+          poster_url: string | null
+          published: boolean
+          resource_persons: Json
+          sort_order: number
+          summary: Json
+          title: string
+          updated_at: string
+          venue: string
+        }
+        Insert: {
+          audience?: string
+          created_at?: string
+          event_date?: string
+          event_time?: string
+          highlights?: Json
+          id?: string
+          kind?: string
+          photos?: Json
+          poster_url?: string | null
+          published?: boolean
+          resource_persons?: Json
+          sort_order?: number
+          summary?: Json
+          title: string
+          updated_at?: string
+          venue?: string
+        }
+        Update: {
+          audience?: string
+          created_at?: string
+          event_date?: string
+          event_time?: string
+          highlights?: Json
+          id?: string
+          kind?: string
+          photos?: Json
+          poster_url?: string | null
+          published?: boolean
+          resource_persons?: Json
+          sort_order?: number
+          summary?: Json
+          title?: string
+          updated_at?: string
+          venue?: string
+        }
+        Relationships: []
+      }
+      club_members: {
+        Row: {
+          created_at: string
+          email: string
+          featured: boolean
+          id: string
+          name: string
+          phone: string
+          photo_url: string | null
+          pin: string
+          published: boolean
+          role_title: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          featured?: boolean
+          id?: string
+          name: string
+          phone?: string
+          photo_url?: string | null
+          pin?: string
+          published?: boolean
+          role_title?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          featured?: boolean
+          id?: string
+          name?: string
+          phone?: string
+          photo_url?: string | null
+          pin?: string
+          published?: boolean
+          role_title?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -154,6 +256,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      site_content: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
       }
       students: {
         Row: {

@@ -6,6 +6,7 @@ import {
   ClipboardList,
   LayoutDashboard,
   LogOut,
+  Palette,
   Settings,
   Trophy,
   Users,
@@ -31,6 +32,7 @@ import { supabase } from "@/integrations/supabase/client";
 const NAV = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Manage Tests", url: "/admin/tests", icon: ClipboardList },
+  { title: "Website Editor", url: "/admin/website", icon: Palette },
   { title: "Students", url: "/admin/students", icon: Users },
   { title: "Results", url: "/admin/results", icon: Trophy },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },

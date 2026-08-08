@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AdminShell } from "@/components/admin/AdminShell";
 import { CalendarEditor } from "@/components/admin/website/CalendarEditor";
 import { ClubInfoEditor } from "@/components/admin/website/ClubInfoEditor";
 import { EventsEditor } from "@/components/admin/website/EventsEditor";
@@ -25,10 +24,13 @@ export const Route = createFileRoute("/_authenticated/admin/website")({
 
 function WebsiteEditorPage() {
   return (
-    <AdminShell
-      title="Website editor"
-      description="Change any content on the public website — no code needed."
-    >
+    <div className="space-y-6">
+      <header className="space-y-1">
+        <h1 className="font-display text-2xl font-semibold">Website editor</h1>
+        <p className="text-sm text-muted-foreground">
+          Change any content on the public website — no code needed.
+        </p>
+      </header>
       <Tabs defaultValue="hero" className="space-y-6">
         <TabsList className="flex-wrap">
           <TabsTrigger value="hero">Home hero</TabsTrigger>
@@ -58,6 +60,6 @@ function WebsiteEditorPage() {
           <MembersEditor />
         </TabsContent>
       </Tabs>
-    </AdminShell>
+    </div>
   );
 }

@@ -12,6 +12,12 @@ import {
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-assessment.jpg";
+import {
+  ClubAbout,
+  ClubCalendar,
+  ClubEvents,
+  ClubTeam,
+} from "@/components/club/ClubSections";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
@@ -178,7 +184,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6">
+        <section className="mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6">
           <h2 className="text-2xl font-semibold sm:text-3xl">Steps to write an exam</h2>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
             Follow these six steps to attempt your coding test without any confusion.
@@ -200,6 +206,11 @@ function Index() {
             ))}
           </div>
         </section>
+
+        <ClubAbout />
+        <ClubCalendar />
+        <ClubEvents />
+        <ClubTeam />
       </main>
 
       <SiteFooter />

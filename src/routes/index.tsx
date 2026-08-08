@@ -1,15 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Clock,
-  Layers,
-  ListChecks,
-  MousePointerClick,
-  Send,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 import heroImage from "@/assets/hero-assessment.jpg";
 import {
@@ -21,12 +12,14 @@ import {
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
+import { getSiteContent } from "@/lib/site-content.functions";
 
 const TITLE = "Code&Creativity — Diploma Coding Assessment Portal";
 const DESCRIPTION =
   "Faculty-run coding quizzes for diploma students: year, branch and section aware tests, live timers, instant scores and rich result analytics.";
 
 export const Route = createFileRoute("/")({
+  loader: () => getSiteContent(),
   head: () => ({
     meta: [
       { title: TITLE },
@@ -51,40 +44,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const EXAM_STEPS = [
-  {
-    icon: MousePointerClick,
-    title: "Step 1 — Open Start Test",
-    body: "Tap Start Test on the home page to open the exam entry form.",
-  },
-  {
-    icon: Layers,
-    title: "Step 2 — Pick your class",
-    body: "Choose your academic year, then your department (branch), then your section.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Step 3 — Confirm your details",
-    body: "Enter your full name and hall ticket number exactly as printed, then press Continue.",
-  },
-  {
-    icon: Clock,
-    title: "Step 4 — Watch the timer",
-    body: "The countdown starts as soon as the paper loads. Use the question palette to move around.",
-  },
-  {
-    icon: ListChecks,
-    title: "Step 5 — Answer every question",
-    body: "Each answer is saved automatically, so you can revisit and change it before submitting.",
-  },
-  {
-    icon: Send,
-    title: "Step 6 — Submit and see your score",
-    body: "Press Submit (or let the timer end) and your score appears instantly on the result page.",
-  },
-];
-
 function Index() {
+  const { club, hero, examSteps, calendar, events, members } = Route.useLoaderData();
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -100,38 +62,36 @@ function Index() {
             >
               <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground">
                 <Sparkles className="size-3.5 text-primary" />
-                Diploma coding assessments, done properly
+                {hero.badge}
               </span>
 
               <h1 className="text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-6xl">
-                Run coding quizzes your <span className="gradient-text">students can trust</span>
+                {hero.headingLead}{" "}
+                <span className="gradient-text">{hero.headingAccent}</span>
               </h1>
 
               <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
-                Code&Creativity gives faculty one place to author question banks, publish tests to a
-                specific year, branch and section, and read the results the minute the timer stops.
+                {hero.subheading}
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
                 <Button asChild size="lg" className="rounded-full px-7 shadow-glow">
                   <Link to="/start">
-                    Start Test <ArrowRight className="ml-1 size-4" />
+                    {hero.primaryCtaLabel} <ArrowRight className="ml-1 size-4" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="rounded-full px-7">
-                  <Link to="/auth">Faculty Login</Link>
+                  <Link to="/auth">{hero.secondaryCtaLabel}</Link>
                 </Button>
               </div>
 
               <dl className="grid max-w-md grid-cols-3 gap-4 pt-4">
-                {[
-                  ["6", "Departments"],
-                  ["3", "Academic years"],
-                  ["4", "Sections each"],
-                ].map(([value, label]) => (
-                  <div key={label}>
-                    <dt className="font-display text-2xl font-semibold text-primary">{value}</dt>
-                    <dd className="text-xs text-muted-foreground">{label}</dd>
+                {hero.stats.map((stat) => (
+                  <div key={stat.label}>
+                    <dt className="font-display text-2xl font-semibold text-primary">
+                      {stat.value}
+                    </dt>
+                    <dd className="text-xs text-muted-foreground">{stat.label}</dd>
                   </div>
                 ))}
               </dl>
@@ -154,25 +114,15 @@ function Index() {
         <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
           <div className="glass grid gap-8 rounded-3xl p-8 md:grid-cols-[1.1fr_1fr] md:p-12">
             <div className="space-y-4">
-              <h2 className="text-2xl font-semibold sm:text-3xl">About the portal</h2>
-              <p className="text-muted-foreground">
-                Built for polytechnic and diploma programmes, Code&Creativity replaces scattered
-                spreadsheets and paper quizzes with a single workflow. Faculty maintain a question
-                bank tagged by year, department, section, subject and difficulty, then publish it as
-                a timed test.
-              </p>
-              <p className="text-muted-foreground">
-                Students never need an account. They pick their academic details, enter their hall
-                ticket, and the system loads only the paper assigned to them.
-              </p>
+              <h2 className="text-2xl font-semibold sm:text-3xl">{hero.aboutHeading}</h2>
+              {hero.aboutParagraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 32)} className="text-muted-foreground">
+                  {paragraph}
+                </p>
+              ))}
             </div>
             <ol className="space-y-4">
-              {[
-                "Faculty author and tag questions",
-                "A test is published to a year, branch and section",
-                "Students verify their details and attempt it once",
-                "Scores and analytics appear instantly for faculty",
-              ].map((step, index) => (
+              {hero.aboutSteps.map((step, index) => (
                 <li key={step} className="flex gap-4">
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/15 font-display text-sm font-semibold text-primary">
                     {index + 1}
@@ -185,12 +135,10 @@ function Index() {
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Steps to write an exam</h2>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            Follow these six steps to attempt your coding test without any confusion.
-          </p>
+          <h2 className="text-2xl font-semibold sm:text-3xl">{examSteps.heading}</h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{examSteps.intro}</p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {EXAM_STEPS.map((feature, index) => (
+            {examSteps.items.map((feature, index) => (
               <motion.article
                 key={feature.title}
                 initial={{ opacity: 0, y: 12 }}
@@ -199,18 +147,17 @@ function Index() {
                 transition={{ duration: 0.25, delay: Math.min(index, 3) * 0.03 }}
                 className="glass rounded-2xl p-6"
               >
-                <feature.icon className="size-6 text-primary" />
-                <h3 className="mt-4 text-base font-semibold">{feature.title}</h3>
+                <h3 className="text-base font-semibold">{feature.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{feature.body}</p>
               </motion.article>
             ))}
           </div>
         </section>
 
-        <ClubAbout />
-        <ClubCalendar />
-        <ClubEvents />
-        <ClubTeam />
+        <ClubAbout club={club} />
+        <ClubCalendar calendar={calendar} />
+        <ClubEvents events={events} />
+        <ClubTeam members={members} club={club} />
       </main>
 
       <SiteFooter />

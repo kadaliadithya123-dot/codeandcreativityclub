@@ -13,6 +13,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
 import { getSiteContent } from "@/lib/site-content.functions";
+import type { SiteContent } from "@/lib/site-content";
 
 const TITLE = "Code&Creativity — Diploma Coding Assessment Portal";
 const DESCRIPTION =
@@ -45,7 +46,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { club, hero, examSteps, calendar, events, members } = Route.useLoaderData();
+  const { club, hero, examSteps, calendar, events, members } =
+    Route.useLoaderData() as SiteContent;
 
   return (
     <div className="min-h-screen bg-background">

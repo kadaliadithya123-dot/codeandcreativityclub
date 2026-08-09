@@ -6,6 +6,7 @@ import { EventsEditor } from "@/components/admin/website/EventsEditor";
 import { ExamStepsEditor } from "@/components/admin/website/ExamStepsEditor";
 import { HeroEditor } from "@/components/admin/website/HeroEditor";
 import { MembersEditor } from "@/components/admin/website/MembersEditor";
+import { UpdatesEditor } from "@/components/admin/website/UpdatesEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/_authenticated/admin/website")({
@@ -37,6 +38,7 @@ function WebsiteEditorPage() {
           <TabsTrigger value="steps">Exam steps</TabsTrigger>
           <TabsTrigger value="club">Club info</TabsTrigger>
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
+          <TabsTrigger value="updates">Updates</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           <TabsTrigger value="team">Team</TabsTrigger>
         </TabsList>
@@ -52,6 +54,9 @@ function WebsiteEditorPage() {
         </TabsContent>
         <TabsContent value="calendar" className="glass rounded-2xl p-6">
           <CalendarEditor />
+        </TabsContent>
+        <TabsContent value="updates" className="glass rounded-2xl p-6">
+          <UpdatesEditor />
         </TabsContent>
         <TabsContent value="events" className="glass rounded-2xl p-6">
           <EventsEditor />

@@ -40,6 +40,24 @@ export type CalendarContent = {
   rows: { event: string; date: string; day: string }[];
 };
 
+export type UpdateItem = {
+  title: string;
+  kind: string;
+  date: string;
+  time: string;
+  venue: string;
+  status: string;
+  details: string;
+};
+
+export type UpdatesContent = {
+  heading: string;
+  intro: string;
+  ctaLabel: string;
+  emptyMessage: string;
+  items: UpdateItem[];
+};
+
 export type ClubEvent = {
   id: string;
   title: string;
@@ -76,11 +94,12 @@ export type SiteContent = {
   hero: HeroContent;
   examSteps: ExamStepsContent;
   calendar: CalendarContent;
+  updates: UpdatesContent;
   events: ClubEvent[];
   members: ClubMember[];
 };
 
-export const CONTENT_KEYS = ["club_info", "hero", "exam_steps", "calendar"] as const;
+export const CONTENT_KEYS = ["club_info", "hero", "exam_steps", "calendar", "updates"] as const;
 export type ContentKey = (typeof CONTENT_KEYS)[number];
 
 export const DEFAULT_CLUB_INFO: ClubInfo = {
@@ -123,6 +142,14 @@ export const DEFAULT_CALENDAR: CalendarContent = {
   rows: [],
 };
 
+export const DEFAULT_UPDATES: UpdatesContent = {
+  heading: "Club updates",
+  intro: "Upcoming quizzes, workshops and events announced by the Code & Creative Club.",
+  ctaLabel: "Check updates",
+  emptyMessage: "No events or quizzes are being conducted yet. Please check back later.",
+  items: [],
+};
+
 /** Merges a raw jsonb blob over the matching defaults so the UI never breaks. */
 export function mergeContent<T extends object>(fallback: T, raw: unknown): T {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return fallback;
@@ -134,6 +161,7 @@ export const EMPTY_SITE_CONTENT: SiteContent = {
   hero: DEFAULT_HERO,
   examSteps: DEFAULT_EXAM_STEPS,
   calendar: DEFAULT_CALENDAR,
+  updates: DEFAULT_UPDATES,
   events: [],
   members: [],
 };

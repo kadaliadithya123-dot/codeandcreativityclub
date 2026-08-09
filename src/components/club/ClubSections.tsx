@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
+import { BellRing, CalendarDays, Clock, MapPin, Users } from "lucide-react";
 
 import type {
   CalendarContent,
@@ -8,7 +8,7 @@ import type {
   ClubMember,
 } from "@/lib/site-content";
 
-export function ClubAbout({ club }: { club: ClubInfo }) {
+export function ClubAbout({ club, updatesCtaLabel }: { club: ClubInfo; updatesCtaLabel?: string }) {
   const CLUB = club;
   return (
     <section id="club" className="hero-surface relative overflow-hidden">
@@ -25,6 +25,14 @@ export function ClubAbout({ club }: { club: ClubInfo }) {
             {CLUB.campus} · {CLUB.society} · “{CLUB.tagline}”
           </p>
           <p className="text-muted-foreground">{CLUB.mission}</p>
+          <div className="pt-2">
+            <Link
+              to="/updates"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform active:scale-95"
+            >
+              <BellRing className="size-4" /> {updatesCtaLabel || "Check updates"}
+            </Link>
+          </div>
         </div>
 
         {/* Right: club poster — defines the section height */}

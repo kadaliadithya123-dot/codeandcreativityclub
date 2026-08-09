@@ -43,14 +43,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { club, calendar, events, members } = Route.useLoaderData() as SiteContent;
+  const { club, calendar, events, members, updates } = Route.useLoaderData() as SiteContent;
 
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
       <main>
-        <ClubAbout club={club} />
+        <ClubAbout club={club} updatesCtaLabel={updates.ctaLabel} />
         <ClubFocus club={club} />
         <ClubCalendar calendar={calendar} />
         <ClubEvents events={events} />

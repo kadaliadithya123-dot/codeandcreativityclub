@@ -5,6 +5,7 @@ import {
   DEFAULT_CLUB_INFO,
   DEFAULT_EXAM_STEPS,
   DEFAULT_HERO,
+  DEFAULT_UPDATES,
   EMPTY_SITE_CONTENT,
   mergeContent,
   type ClubEvent,
@@ -36,6 +37,7 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
       hero: mergeContent(DEFAULT_HERO, byKey.get("hero")),
       examSteps: mergeContent(DEFAULT_EXAM_STEPS, byKey.get("exam_steps")),
       calendar: mergeContent(DEFAULT_CALENDAR, byKey.get("calendar")),
+      updates: mergeContent(DEFAULT_UPDATES, byKey.get("updates")),
       events: (events.data ?? []) as unknown as ClubEvent[],
       members: (members.data ?? []) as unknown as ClubMember[],
     };

@@ -1,4 +1,4 @@
-import { CalendarDays, Clock, MapPin, Target, Users } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 
 import type {
   CalendarContent,
@@ -10,67 +10,34 @@ import type {
 export function ClubAbout({ club }: { club: ClubInfo }) {
   const CLUB = club;
   return (
-    <section id="club" className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
-      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <section id="club" className="hero-surface relative overflow-hidden">
+      <div className="relative mx-auto w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid lg:grid-cols-2 lg:py-16">
+        {/* Left: club info — capped to the poster height on large screens */}
+        <div className="flex flex-col justify-center gap-4 lg:absolute lg:inset-y-12 lg:left-4 lg:w-[calc(50%-3.25rem)] lg:overflow-y-auto sm:lg:left-6">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
+            {CLUB.centre} · {CLUB.academicYear}
+          </p>
+          <h1 className="text-3xl font-semibold leading-[1.12] sm:text-4xl">
+            {CLUB.name} — {CLUB.college}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {CLUB.campus} · {CLUB.society} · “{CLUB.tagline}”
+          </p>
+          <p className="text-muted-foreground">{CLUB.mission}</p>
+        </div>
+
+        {/* Right: club poster — defines the section height */}
         {CLUB.posterUrl ? (
-          <div className="glass overflow-hidden rounded-3xl p-3">
-          <img
-            src={CLUB.posterUrl}
-            alt={`${CLUB.name} ${CLUB.academicYear} official poster of ${CLUB.college}`}
-            loading="lazy"
-            decoding="async"
-            className="w-full rounded-2xl"
-          />
+          <div className="glass mt-8 overflow-hidden rounded-3xl p-3 lg:col-start-2 lg:mt-0">
+            <img
+              src={CLUB.posterUrl}
+              alt={`${CLUB.name} ${CLUB.academicYear} official poster of ${CLUB.college}`}
+              fetchPriority="high"
+              decoding="async"
+              className="w-full rounded-2xl"
+            />
           </div>
         ) : null}
-
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
-              {CLUB.centre} · {CLUB.academicYear}
-            </p>
-            <h2 className="text-2xl font-semibold sm:text-3xl">
-              {CLUB.name} — {CLUB.college}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {CLUB.campus} · {CLUB.society} · “{CLUB.tagline}”
-            </p>
-          </div>
-
-          <p className="text-muted-foreground">{CLUB.mission}</p>
-
-          <div className="glass rounded-2xl p-6">
-            <h3 className="flex items-center gap-2 text-base font-semibold">
-              <Target className="size-4 text-primary" /> Goal of the club
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">{CLUB.goal}</p>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="glass rounded-2xl p-6">
-              <h3 className="text-base font-semibold">Objectives</h3>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                {CLUB.objectives.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="glass rounded-2xl p-6">
-              <h3 className="text-base font-semibold">Club activities</h3>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                {CLUB.activities.map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -115,27 +82,28 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
     <section id="events" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
       <h2 className="text-2xl font-semibold sm:text-3xl">Events conducted</h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-        Workshops, seminars and technical fests conducted by the club, with official posters and
-        photographs from each session.
+        Workshops, seminars and technical fests conducted by the club, with the official poster and
+        details of each session.
       </p>
 
       <div className="mt-8 space-y-10">
         {events.map((event) => (
           <article key={event.id} className="glass rounded-3xl p-6 sm:p-8">
-            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="relative gap-8 lg:grid lg:grid-cols-[0.8fr_1.2fr]">
               {event.poster_url ? (
                 <div className="overflow-hidden rounded-2xl border border-border/60">
-                <img
-                  src={event.poster_url}
-                  alt={`${event.title} event poster`}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full"
-                />
+                  <img
+                    src={event.poster_url}
+                    alt={`${event.title} event poster`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full"
+                  />
                 </div>
               ) : null}
 
-              <div className="space-y-5">
+              {/* Details column — capped to the poster height on large screens */}
+              <div className="mt-6 space-y-5 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[calc(60%-1rem)] lg:overflow-y-auto lg:pr-1">
                 <div>
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
                     {event.kind}
@@ -187,23 +155,6 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                   ))}
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {event.photos.map((photo) => (
-                <figure key={photo.url} className="overflow-hidden rounded-2xl border border-border/60">
-                  <img
-                    src={photo.url}
-                    alt={photo.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full"
-                  />
-                  <figcaption className="px-4 py-2 text-xs text-muted-foreground">
-                    {photo.alt}
-                  </figcaption>
-                </figure>
-              ))}
             </div>
           </article>
         ))}

@@ -9,7 +9,6 @@ import {
 import { ClubFocus } from "@/components/club/ClubFocus";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { StickyCta } from "@/components/layout/StickyCta";
 import { getSiteContent } from "@/lib/site-content.functions";
 import type { SiteContent } from "@/lib/site-content";
 
@@ -58,7 +57,6 @@ function Index() {
         <ClubTeam members={members} club={club} />
       </main>
 
-      <StickyCta />
       <SiteFooter />
     </div>
   );

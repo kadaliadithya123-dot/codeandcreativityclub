@@ -29,23 +29,23 @@ export function SiteFooter() {
           <Link to="/team" className="block text-muted-foreground hover:text-foreground">
             Team
           </Link>
-          <Link to="/join" className="block text-muted-foreground hover:text-foreground">
-            Join the club
-          </Link>
           <Link to="/auth" className="block text-muted-foreground hover:text-foreground">
             Faculty Login
           </Link>
         </div>
 
         <div className="space-y-2 text-sm">
-          <p className="font-medium">Students</p>
-          <Link to="/start" className="block text-muted-foreground hover:text-foreground">
-            Start a test
-          </Link>
-          <Link to="/result" className="block text-muted-foreground hover:text-foreground">
-            View last score
-          </Link>
-          <span className="block text-muted-foreground">Support: exams@college.edu</span>
+          <p className="font-medium">Support</p>
+          <a
+            href="mailto:support@seethapoly.edu.in"
+            className="block text-muted-foreground hover:text-foreground"
+          >
+            support@seethapoly.edu.in
+          </a>
+          <p className="text-muted-foreground">
+            Quizzes and contests are announced as club events — check the Events page for upcoming
+            and past editions.
+          </p>
         </div>
       </div>
       <div className="border-t border-border/60 px-4 py-5 text-center text-xs text-muted-foreground">

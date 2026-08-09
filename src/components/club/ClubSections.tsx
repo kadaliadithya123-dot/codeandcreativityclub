@@ -1,4 +1,4 @@
-import { CalendarDays, Clock, MapPin, Target, Users, Mail, Phone, IdCard } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Target, Users } from "lucide-react";
 
 import type {
   CalendarContent,
@@ -231,29 +231,6 @@ function MemberCard({ member }: { member: ClubMember }) {
         {member.role_title}
       </p>
       <h3 className={`mt-2 font-semibold ${featured ? "text-xl" : "text-base"}`}>{member.name}</h3>
-      <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-        {member.pin ? (
-          <li className="flex items-center gap-2">
-            <IdCard className="size-4 text-primary" /> {member.pin}
-          </li>
-        ) : null}
-        {member.email ? (
-        <li className="flex items-center gap-2 break-all">
-          <Mail className="size-4 shrink-0 text-primary" />
-          <a href={`mailto:${member.email}`} className="hover:text-foreground">
-            {member.email}
-          </a>
-        </li>
-        ) : null}
-        {member.phone ? (
-        <li className="flex items-center gap-2">
-          <Phone className="size-4 text-primary" />
-          <a href={`tel:+91${member.phone}`} className="hover:text-foreground">
-            +91 {member.phone}
-          </a>
-        </li>
-        ) : null}
-      </ul>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { IdCard, Mail, Phone } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -42,6 +43,29 @@ function MemberCard({ member, large }: { member: ClubMember; large?: boolean }) 
         {member.role_title}
       </p>
       <h3 className={`mt-2 font-semibold ${large ? "text-2xl" : "text-lg"}`}>{member.name}</h3>
+      <dl className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+        {member.pin ? (
+          <div className="flex items-center gap-2">
+            <IdCard className="size-4 shrink-0 text-primary" /> {member.pin}
+          </div>
+        ) : null}
+        {member.phone ? (
+          <a
+            href={`tel:${member.phone}`}
+            className="flex items-center gap-2 transition-colors hover:text-foreground"
+          >
+            <Phone className="size-4 shrink-0 text-primary" /> {member.phone}
+          </a>
+        ) : null}
+        {member.email ? (
+          <a
+            href={`mailto:${member.email}`}
+            className="flex items-center gap-2 break-all transition-colors hover:text-foreground"
+          >
+            <Mail className="size-4 shrink-0 text-primary" /> {member.email}
+          </a>
+        ) : null}
+      </dl>
     </article>
   );
 }
@@ -86,7 +110,7 @@ function TeamPage() {
         {club.objectives.length > 0 || club.activities.length > 0 ? (
           <section className="mt-16 grid gap-6 lg:grid-cols-2">
             {club.objectives.length > 0 ? (
-              <div className="glass rounded-3xl p-6">
+              <div className="glass rounded-3xl p-6 transition-shadow duration-300 hover:shadow-xl hover:ring-1 hover:ring-primary/30">
                 <h2 className="text-lg font-semibold">Objectives</h2>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
                   {club.objectives.map((o) => (
@@ -96,7 +120,7 @@ function TeamPage() {
               </div>
             ) : null}
             {club.activities.length > 0 ? (
-              <div className="glass rounded-3xl p-6">
+              <div className="glass rounded-3xl p-6 transition-shadow duration-300 hover:shadow-xl hover:ring-1 hover:ring-primary/30">
                 <h2 className="text-lg font-semibold">Activities</h2>
                 <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
                   {club.activities.map((a) => (

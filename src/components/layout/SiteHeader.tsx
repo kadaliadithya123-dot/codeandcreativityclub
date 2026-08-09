@@ -32,6 +32,11 @@ export function SiteHeader() {
               Team
             </Link>
           </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/updates" activeProps={{ className: "text-primary" }}>
+              Updates
+            </Link>
+          </Button>
           <Button asChild variant="outline" size="sm">
             <Link to="/auth">Faculty Login</Link>
           </Button>

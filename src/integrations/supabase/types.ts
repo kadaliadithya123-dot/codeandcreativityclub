@@ -388,7 +388,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      club_members_public: {
+        Row: {
+          created_at: string | null
+          featured: boolean | null
+          id: string | null
+          name: string | null
+          photo_url: string | null
+          published: boolean | null
+          role_title: string | null
+          sort_order: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          name?: string | null
+          photo_url?: string | null
+          published?: boolean | null
+          role_title?: string | null
+          sort_order?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          name?: string | null
+          photo_url?: string | null
+          published?: boolean | null
+          role_title?: string | null
+          sort_order?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {

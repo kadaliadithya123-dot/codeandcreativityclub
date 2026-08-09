@@ -82,27 +82,28 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
     <section id="events" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
       <h2 className="text-2xl font-semibold sm:text-3xl">Events conducted</h2>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-        Workshops, seminars and technical fests conducted by the club, with official posters and
-        photographs from each session.
+        Workshops, seminars and technical fests conducted by the club, with the official poster and
+        details of each session.
       </p>
 
       <div className="mt-8 space-y-10">
         {events.map((event) => (
           <article key={event.id} className="glass rounded-3xl p-6 sm:p-8">
-            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="relative gap-8 lg:grid lg:grid-cols-[0.8fr_1.2fr]">
               {event.poster_url ? (
                 <div className="overflow-hidden rounded-2xl border border-border/60">
-                <img
-                  src={event.poster_url}
-                  alt={`${event.title} event poster`}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full"
-                />
+                  <img
+                    src={event.poster_url}
+                    alt={`${event.title} event poster`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full"
+                  />
                 </div>
               ) : null}
 
-              <div className="space-y-5">
+              {/* Details column — capped to the poster height on large screens */}
+              <div className="mt-6 space-y-5 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[calc(60%-1rem)] lg:overflow-y-auto lg:pr-1">
                 <div>
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
                     {event.kind}
@@ -154,23 +155,6 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                   ))}
                 </div>
               </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {event.photos.map((photo) => (
-                <figure key={photo.url} className="overflow-hidden rounded-2xl border border-border/60">
-                  <img
-                    src={photo.url}
-                    alt={photo.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full"
-                  />
-                  <figcaption className="px-4 py-2 text-xs text-muted-foreground">
-                    {photo.alt}
-                  </figcaption>
-                </figure>
-              ))}
             </div>
           </article>
         ))}

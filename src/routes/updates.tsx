@@ -41,19 +41,22 @@ function UpdatesPage() {
         <p className="mt-3 text-muted-foreground">{updates.intro}</p>
 
         {updates.items.length === 0 ? (
-          <div className="glass mt-10 rounded-3xl p-10 text-center">
+          <div className="glass mt-10 rounded-3xl p-10 text-center transition-shadow duration-300 hover:shadow-xl">
             <p className="text-muted-foreground">{updates.emptyMessage}</p>
           </div>
         ) : (
           <ul className="mt-10 space-y-4">
             {updates.items.map((item, index) => (
-              <li key={`${item.title}-${index}`} className="glass rounded-2xl p-5">
+              <li
+                key={`${item.title}-${index}`}
+                className="glass rounded-2xl p-5 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:ring-1 hover:ring-primary/30"
+              >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
                     {item.kind}
                   </p>
                   {item.status ? (
-                    <span className="rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground">
+                    <span className="rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground transition-colors duration-200 hover:border-primary/50 hover:text-foreground">
                       {item.status}
                     </span>
                   ) : null}

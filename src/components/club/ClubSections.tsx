@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BellRing, CalendarDays, Clock, MapPin, Users } from "lucide-react";
+import { BellRing, CalendarDays, Clock, IdCard, Mail, MapPin, Phone, Users } from "lucide-react";
 
 import type {
   CalendarContent,
@@ -204,6 +204,29 @@ function MemberCard({ member }: { member: ClubMember }) {
         {member.role_title}
       </p>
       <h3 className={`mt-2 font-semibold ${featured ? "text-xl" : "text-base"}`}>{member.name}</h3>
+      <dl className="mt-3 space-y-1.5 text-xs text-muted-foreground">
+        {member.pin ? (
+          <div className="flex items-center gap-2">
+            <IdCard className="size-3.5 shrink-0 text-primary" /> {member.pin}
+          </div>
+        ) : null}
+        {member.phone ? (
+          <a
+            href={`tel:${member.phone}`}
+            className="flex items-center gap-2 transition-colors hover:text-foreground"
+          >
+            <Phone className="size-3.5 shrink-0 text-primary" /> {member.phone}
+          </a>
+        ) : null}
+        {member.email ? (
+          <a
+            href={`mailto:${member.email}`}
+            className="flex items-center gap-2 break-all transition-colors hover:text-foreground"
+          >
+            <Mail className="size-3.5 shrink-0 text-primary" /> {member.email}
+          </a>
+        ) : null}
+      </dl>
     </div>
   );
 }

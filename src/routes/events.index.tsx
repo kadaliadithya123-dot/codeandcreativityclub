@@ -41,7 +41,7 @@ function EventsIndex() {
               key={event.id}
               to="/events/$eventId"
               params={{ eventId: event.id }}
-              className="glass group flex flex-col overflow-hidden rounded-3xl transition-colors hover:border-primary/50"
+              className="glass group flex flex-col overflow-hidden rounded-3xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-2xl hover:ring-1 hover:ring-primary/30"
             >
               {event.poster_url ? (
                 <img
@@ -49,14 +49,16 @@ function EventsIndex() {
                   alt={`${event.title} event poster`}
                   loading="lazy"
                   decoding="async"
-                  className="w-full"
+                  className="w-full transition-transform duration-500 group-hover:scale-105"
                 />
               ) : null}
               <div className="space-y-3 p-5">
                 <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
                   {event.kind}
                 </p>
-                <h2 className="text-lg font-semibold">{event.title}</h2>
+                <h2 className="text-lg font-semibold transition-colors duration-200 group-hover:text-primary">
+                  {event.title}
+                </h2>
                 <dl className="space-y-1.5 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <CalendarDays className="size-4 text-primary" /> {event.event_date}
@@ -71,8 +73,9 @@ function EventsIndex() {
                     <Users className="size-4 text-primary" /> {event.audience}
                   </div>
                 </dl>
-                <span className="inline-block text-sm font-medium text-primary">
-                  View full details →
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                  View full details
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
                 </span>
               </div>
             </Link>
@@ -95,7 +98,10 @@ function EventsIndex() {
                 </thead>
                 <tbody>
                   {calendar.rows.map((row, index) => (
-                    <tr key={`${row.event}-${index}`} className="border-b border-border/40 last:border-0">
+                    <tr
+                      key={`${row.event}-${index}`}
+                      className="border-b border-border/40 transition-colors duration-200 last:border-0 hover:bg-primary/5"
+                    >
                       <td className="px-5 py-3 text-muted-foreground">{index + 1}</td>
                       <td className="px-5 py-3 font-medium">{row.event}</td>
                       <td className="px-5 py-3 text-muted-foreground">{row.date}</td>

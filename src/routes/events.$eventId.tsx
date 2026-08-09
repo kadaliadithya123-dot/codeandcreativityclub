@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { StickyCta } from "@/components/layout/StickyCta";
 import { getSiteContent } from "@/lib/site-content.functions";
+import type { ClubEvent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/events/$eventId")({
   loader: async ({ params }) => {
@@ -51,7 +52,7 @@ function EventNotFound() {
 }
 
 function EventDetail() {
-  const { event } = Route.useLoaderData();
+  const { event } = Route.useLoaderData() as { event: ClubEvent };
 
   return (
     <div className="min-h-screen bg-background">

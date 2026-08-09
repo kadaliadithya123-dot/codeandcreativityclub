@@ -19,19 +19,28 @@ export function SiteFooter() {
         </div>
 
         <div className="space-y-2 text-sm">
+          <p className="font-medium">Quick links</p>
+          <Link to="/" className="block text-muted-foreground hover:text-foreground">
+            Home
+          </Link>
+          <Link to="/events" className="block text-muted-foreground hover:text-foreground">
+            Events
+          </Link>
+          <Link to="/team" className="block text-muted-foreground hover:text-foreground">
+            Team
+          </Link>
+          <Link to="/auth" className="block text-muted-foreground hover:text-foreground">
+            Faculty Login
+          </Link>
+        </div>
+
+        <div className="space-y-2 text-sm">
           <p className="font-medium">Students</p>
           <Link to="/start" className="block text-muted-foreground hover:text-foreground">
             Start a test
           </Link>
           <Link to="/result" className="block text-muted-foreground hover:text-foreground">
             View last score
-          </Link>
-        </div>
-
-        <div className="space-y-2 text-sm">
-          <p className="font-medium">Faculty</p>
-          <Link to="/auth" className="block text-muted-foreground hover:text-foreground">
-            Admin login
           </Link>
           <span className="block text-muted-foreground">Support: exams@college.edu</span>
         </div>

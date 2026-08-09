@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 
 import type {
@@ -89,7 +90,7 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
       <div className="mt-8 space-y-10">
         {events.map((event) => (
           <article key={event.id} className="glass rounded-3xl p-6 sm:p-8">
-            <div className="relative gap-8 lg:grid lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="gap-8 lg:grid lg:grid-cols-[0.8fr_1.2fr]">
               {event.poster_url ? (
                 <div className="overflow-hidden rounded-2xl border border-border/60">
                   <img
@@ -102,8 +103,7 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                 </div>
               ) : null}
 
-              {/* Details column — capped to the poster height on large screens */}
-              <div className="mt-6 space-y-5 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[calc(60%-1rem)] lg:overflow-y-auto lg:pr-1">
+              <div className="mt-6 space-y-5 lg:mt-0">
                 <div>
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">
                     {event.kind}
@@ -154,6 +154,14 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                     <p key={p.slice(0, 32)}>{p}</p>
                   ))}
                 </div>
+
+                <Link
+                  to="/events/$eventId"
+                  params={{ eventId: event.id }}
+                  className="inline-block text-sm font-medium text-primary hover:underline"
+                >
+                  View full details &amp; photos →
+                </Link>
               </div>
             </div>
           </article>

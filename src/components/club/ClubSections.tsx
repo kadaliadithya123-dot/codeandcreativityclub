@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
+import { BellRing, CalendarDays, Clock, MapPin, Users } from "lucide-react";
 
 import type {
   CalendarContent,

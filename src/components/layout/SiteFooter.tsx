@@ -29,6 +29,9 @@ export function SiteFooter() {
           <Link to="/team" className="block text-muted-foreground hover:text-foreground">
             Team
           </Link>
+          <Link to="/join" className="block text-muted-foreground hover:text-foreground">
+            Join the club
+          </Link>
           <Link to="/auth" className="block text-muted-foreground hover:text-foreground">
             Faculty Login
           </Link>

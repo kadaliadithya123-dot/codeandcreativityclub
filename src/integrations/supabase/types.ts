@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      club_applications: {
+        Row: {
+          created_at: string
+          department: string
+          email: string
+          full_name: string
+          id: string
+          interests: string
+          phone: string
+          pin: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string
+          email: string
+          full_name: string
+          id?: string
+          interests?: string
+          phone?: string
+          pin?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          department?: string
+          email?: string
+          full_name?: string
+          id?: string
+          interests?: string
+          phone?: string
+          pin?: string
+          status?: string
+        }
+        Relationships: []
+      }
       club_events: {
         Row: {
           audience: string

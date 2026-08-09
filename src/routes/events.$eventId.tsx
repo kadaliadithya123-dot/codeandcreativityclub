@@ -59,9 +59,10 @@ function EventDetail() {
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
         <Link
           to="/events"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
         >
-          <ArrowLeft className="size-4" /> All events
+          <ArrowLeft className="size-4 transition-transform duration-200 group-hover:-translate-x-1" /> All
+          events
         </Link>
 
         <p className="mt-6 text-xs font-medium uppercase tracking-[0.16em] text-primary">
@@ -69,7 +70,7 @@ function EventDetail() {
         </p>
         <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">{event.title}</h1>
 
-        <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4 [&>div]:transition-[transform,box-shadow] [&>div]:duration-300 [&>div:hover]:-translate-y-0.5 [&>div:hover]:shadow-lg [&>div:hover]:ring-1 [&>div:hover]:ring-primary/30">
           <div className="glass flex items-center gap-2 rounded-2xl px-4 py-3 text-muted-foreground">
             <CalendarDays className="size-4 text-primary" /> {event.event_date}
           </div>
@@ -86,12 +87,12 @@ function EventDetail() {
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           {event.poster_url ? (
-            <div className="glass overflow-hidden rounded-3xl p-3">
+            <div className="glass group overflow-hidden rounded-3xl p-3 transition-shadow duration-300 hover:shadow-2xl">
               <img
                 src={event.poster_url}
                 alt={`${event.title} event poster`}
                 decoding="async"
-                className="w-full rounded-2xl"
+                className="w-full rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]"
               />
             </div>
           ) : null}
@@ -104,7 +105,7 @@ function EventDetail() {
                   {event.highlights.map((h) => (
                     <li
                       key={h}
-                      className="rounded-full border border-border/60 bg-primary/10 px-3 py-1 text-xs"
+                      className="rounded-full border border-border/60 bg-primary/10 px-3 py-1 text-xs transition-colors duration-200 hover:border-primary/50 hover:bg-primary/20"
                     >
                       {h}
                     </li>
@@ -142,13 +143,16 @@ function EventDetail() {
             <h2 className="text-2xl font-semibold">Event gallery</h2>
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {event.photos.map((photo) => (
-                <figure key={photo.url} className="glass overflow-hidden rounded-2xl">
+                <figure
+                  key={photo.url}
+                  className="glass group overflow-hidden rounded-2xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                >
                   <img
                     src={photo.url}
                     alt={photo.alt || `${event.title} photograph`}
                     loading="lazy"
                     decoding="async"
-                    className="w-full"
+                    className="w-full transition-transform duration-500 group-hover:scale-105"
                   />
                   {photo.alt ? (
                     <figcaption className="px-4 py-3 text-xs text-muted-foreground">

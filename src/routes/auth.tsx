@@ -11,9 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
-const TITLE = "Faculty login — Code&Creativity";
+const TITLE = "Faculty login — Code & Creative Club";
 const DESCRIPTION =
-  "Secure sign in for diploma faculty to manage question banks, publish tests and review student results.";
+  "Secure sign in for Code & Creative Club faculty to manage the website, events, club quizzes and student results.";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -78,9 +78,13 @@ function AuthPage() {
       >
         <div className="flex flex-col items-center text-center">
           <img src={logo} alt="College emblem" width={56} height={56} className="size-14" />
-          <h1 className="mt-4 text-2xl font-semibold">Administrator access</h1>
+          <p className="mt-3 text-xs font-medium uppercase tracking-[0.18em] text-primary">
+            Smt. B. Seetha Polytechnic
+          </p>
+          <h1 className="mt-2 text-2xl font-semibold">Faculty login</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            This portal has a single fixed admin login. Public sign-ups are disabled.
+            Manage the Code &amp; Creative Club website, events, updates, team and club quizzes. Single
+            fixed admin login — public sign-ups are disabled.
           </p>
         </div>
 
@@ -111,11 +115,15 @@ function AuthPage() {
               Remember me
             </label>
           </div>
-          <p className="flex items-start gap-2 text-xs text-muted-foreground">
+          <p className="flex items-start gap-2 rounded-xl border border-border/60 bg-primary/5 p-3 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary" />
-            Credentials are issued by the exam cell — there is no self-service registration.
+            Credentials are issued by the club coordinator — there is no self-service registration.
           </p>
-          <Button type="submit" className="w-full rounded-full" disabled={busy}>
+          <Button
+            type="submit"
+            className="w-full rounded-full transition-transform duration-200 hover:scale-[1.02] active:scale-95"
+            disabled={busy}
+          >
             {busy ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
@@ -129,8 +137,8 @@ function AuthPage() {
 
         <p className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Lock className="size-3.5" />
-          <Link to="/" className="hover:text-foreground">
-            Return to the student portal
+          <Link to="/" className="transition-colors hover:text-foreground">
+            Return to the club website
           </Link>
         </p>
       </motion.div>

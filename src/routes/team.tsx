@@ -27,7 +27,7 @@ export const Route = createFileRoute("/team")({
 function MemberCard({ member, large }: { member: ClubMember; large?: boolean }) {
   return (
     <article
-      className={`glass rounded-3xl p-6 ${member.featured ? "border-primary/40 ring-1 ring-primary/30" : ""}`}
+      className={`glass group rounded-3xl p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-1 hover:ring-primary/40 ${member.featured ? "border-primary/40 ring-1 ring-primary/30" : ""}`}
     >
       {member.photo_url ? (
         <img
@@ -35,7 +35,7 @@ function MemberCard({ member, large }: { member: ClubMember; large?: boolean }) 
           alt={`${member.name}, ${member.role_title}`}
           loading="lazy"
           decoding="async"
-          className={`mb-4 rounded-2xl object-cover ${large ? "size-28" : "size-20"}`}
+          className={`mb-4 rounded-2xl object-cover transition-transform duration-300 group-hover:scale-105 ${large ? "size-28" : "size-20"}`}
         />
       ) : null}
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">

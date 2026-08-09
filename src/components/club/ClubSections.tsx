@@ -1,4 +1,4 @@
-import { CalendarDays, Clock, MapPin, Target, Users, Mail, Phone, IdCard } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Target, Users } from "lucide-react";
 
 import type {
   CalendarContent,

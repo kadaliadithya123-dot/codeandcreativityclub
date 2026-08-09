@@ -21,7 +21,10 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
     const [blocks, events, members] = await Promise.all([
       supabase.from("site_content").select("key, value"),
       supabase.from("club_events").select("*").eq("published", true).order("sort_order"),
-      supabase.from("club_members").select("*").eq("published", true).order("sort_order"),
+      supabase
+        .from("club_members_public")
+        .select("id, role_title, name, photo_url, featured, sort_order, published")
+        .order("sort_order"),
     ]);
 
     if (blocks.error || events.error || members.error) return EMPTY_SITE_CONTENT;

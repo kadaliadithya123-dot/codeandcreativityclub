@@ -61,9 +61,10 @@ export type ClubMember = {
   id: string;
   role_title: string;
   name: string;
-  pin: string;
-  email: string;
-  phone: string;
+  /** Staff-only fields, never included in public site content. */
+  pin?: string;
+  email?: string;
+  phone?: string;
   photo_url: string | null;
   featured: boolean;
   sort_order: number;

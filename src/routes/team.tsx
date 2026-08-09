@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { StickyCta } from "@/components/layout/StickyCta";
 import { getSiteContent } from "@/lib/site-content.functions";
 import type { ClubMember, SiteContent } from "@/lib/site-content";
 
@@ -109,7 +108,6 @@ function TeamPage() {
           </section>
         ) : null}
       </main>
-      <StickyCta />
       <SiteFooter />
     </div>
   );

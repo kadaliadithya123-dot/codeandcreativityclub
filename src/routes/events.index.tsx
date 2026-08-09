@@ -3,7 +3,6 @@ import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { StickyCta } from "@/components/layout/StickyCta";
 import { getSiteContent } from "@/lib/site-content.functions";
 import type { SiteContent } from "@/lib/site-content";
 
@@ -109,7 +108,6 @@ function EventsIndex() {
           </section>
         ) : null}
       </main>
-      <StickyCta />
       <SiteFooter />
     </div>
   );

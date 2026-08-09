@@ -56,8 +56,14 @@ export function ClubFocus({ club }: { club: ClubInfo }) {
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {DIRECTIVES.map((item) => (
-          <article key={item.title} className="glass rounded-2xl p-6">
-            <item.icon className="size-6 text-primary" aria-hidden="true" />
+          <article
+            key={item.title}
+            className="glass group rounded-2xl p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-1 hover:ring-primary/40"
+          >
+            <item.icon
+              className="size-6 text-primary transition-transform duration-300 group-hover:scale-110"
+              aria-hidden="true"
+            />
             <h3 className="mt-4 font-semibold">{item.title}</h3>
             <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
           </article>
@@ -65,7 +71,7 @@ export function ClubFocus({ club }: { club: ClubInfo }) {
       </div>
 
       {club.mission ? (
-        <figure className="glass mt-10 rounded-3xl p-6 sm:p-8">
+        <figure className="glass mt-10 rounded-3xl p-6 transition-shadow duration-300 hover:shadow-2xl hover:ring-1 hover:ring-primary/30 sm:p-8">
           <Quote className="size-6 text-primary" aria-hidden="true" />
           <blockquote className="mt-3 text-base leading-relaxed sm:text-lg">
             {club.mission}

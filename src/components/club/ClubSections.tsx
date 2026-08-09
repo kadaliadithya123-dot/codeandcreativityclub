@@ -28,7 +28,7 @@ export function ClubAbout({ club, updatesCtaLabel }: { club: ClubInfo; updatesCt
           <div className="pt-2">
             <Link
               to="/updates"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform active:scale-95"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
             >
               <BellRing className="size-4" /> {updatesCtaLabel || "Check updates"}
             </Link>
@@ -37,13 +37,13 @@ export function ClubAbout({ club, updatesCtaLabel }: { club: ClubInfo; updatesCt
 
         {/* Right: club poster — defines the section height */}
         {CLUB.posterUrl ? (
-          <div className="glass mt-8 overflow-hidden rounded-3xl p-3 lg:col-start-2 lg:mt-0">
+          <div className="glass group mt-8 overflow-hidden rounded-3xl p-3 transition-shadow duration-300 hover:shadow-2xl lg:col-start-2 lg:mt-0">
             <img
               src={CLUB.posterUrl}
               alt={`${CLUB.name} ${CLUB.academicYear} official poster of ${CLUB.college}`}
               fetchPriority="high"
               decoding="async"
-              className="w-full rounded-2xl"
+              className="w-full rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </div>
         ) : null}
@@ -71,7 +71,10 @@ export function ClubCalendar({ calendar }: { calendar: CalendarContent }) {
           </thead>
           <tbody>
             {calendar.rows.map((row, index) => (
-              <tr key={`${row.event}-${index}`} className="border-b border-border/40 last:border-0">
+              <tr
+                key={`${row.event}-${index}`}
+                className="border-b border-border/40 transition-colors duration-200 last:border-0 hover:bg-primary/5"
+              >
                 <td className="px-5 py-3 text-muted-foreground">{index + 1}</td>
                 <td className="px-5 py-3 font-medium">{row.event}</td>
                 <td className="px-5 py-3 text-muted-foreground">{row.date}</td>
@@ -97,7 +100,10 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
 
       <div className="mt-8 space-y-10">
         {events.map((event) => (
-          <article key={event.id} className="glass rounded-3xl p-6 sm:p-8">
+          <article
+            key={event.id}
+            className="glass group rounded-3xl p-6 transition-shadow duration-300 hover:shadow-2xl hover:ring-1 hover:ring-primary/25 sm:p-8"
+          >
             <div className="gap-8 lg:grid lg:grid-cols-[0.8fr_1.2fr]">
               {event.poster_url ? (
                 <div className="overflow-hidden rounded-2xl border border-border/60">
@@ -106,7 +112,7 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                     alt={`${event.title} event poster`}
                     loading="lazy"
                     decoding="async"
-                    className="w-full"
+                    className="w-full transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               ) : null}
@@ -140,7 +146,7 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                     {event.highlights.map((h) => (
                       <li
                         key={h}
-                        className="rounded-full border border-border/60 bg-primary/10 px-3 py-1 text-xs text-foreground"
+                        className="rounded-full border border-border/60 bg-primary/10 px-3 py-1 text-xs text-foreground transition-colors duration-200 hover:border-primary/50 hover:bg-primary/20"
                       >
                         {h}
                       </li>
@@ -166,7 +172,7 @@ export function ClubEvents({ events }: { events: ClubEvent[] }) {
                 <Link
                   to="/events/$eventId"
                   params={{ eventId: event.id }}
-                  className="inline-block text-sm font-medium text-primary hover:underline"
+                  className="story-link inline-block text-sm font-medium text-primary"
                 >
                   View full details &amp; photos →
                 </Link>
@@ -183,7 +189,7 @@ function MemberCard({ member }: { member: ClubMember }) {
   const featured = member.featured;
   return (
     <div
-      className={`glass rounded-2xl p-6 ${featured ? "border-primary/40 ring-1 ring-primary/30" : ""}`}
+      className={`glass group rounded-2xl p-6 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-1 hover:ring-primary/40 ${featured ? "border-primary/40 ring-1 ring-primary/30" : ""}`}
     >
       {member.photo_url ? (
         <img
@@ -191,7 +197,7 @@ function MemberCard({ member }: { member: ClubMember }) {
           alt={`${member.name}, ${member.role_title}`}
           loading="lazy"
           decoding="async"
-          className="mb-4 size-20 rounded-full object-cover"
+          className="mb-4 size-20 rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       ) : null}
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">

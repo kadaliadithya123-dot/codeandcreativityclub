@@ -6,6 +6,7 @@ import {
   ClubEvents,
   ClubTeam,
 } from "@/components/club/ClubSections";
+import { ClubFocus } from "@/components/club/ClubFocus";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { StickyCta } from "@/components/layout/StickyCta";
@@ -51,6 +52,7 @@ function Index() {
 
       <main>
         <ClubAbout club={club} />
+        <ClubFocus club={club} />
         <ClubCalendar calendar={calendar} />
         <ClubEvents events={events} />
         <ClubTeam members={members} club={club} />

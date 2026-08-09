@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
   ClipboardList,
+  Inbox,
   LayoutDashboard,
   LogOut,
   Palette,
@@ -33,6 +34,7 @@ const NAV = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Manage Tests", url: "/admin/tests", icon: ClipboardList },
   { title: "Website Editor", url: "/admin/website", icon: Palette },
+  { title: "Applications", url: "/admin/applications", icon: Inbox },
   { title: "Students", url: "/admin/students", icon: Users },
   { title: "Results", url: "/admin/results", icon: Trophy },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },

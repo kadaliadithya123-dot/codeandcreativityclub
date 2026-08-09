@@ -108,7 +108,18 @@ export function MembersEditor() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {(members.data ?? []).map((member) => (
-          <div key={member.id} className="glass flex items-center gap-3 rounded-xl p-4">
+          <div
+            key={member.id}
+            className="glass flex items-start gap-3 rounded-xl p-4 transition-shadow duration-200 hover:shadow-lg hover:ring-1 hover:ring-primary/30"
+          >
+            {member.photo_url ? (
+              <img
+                src={member.photo_url}
+                alt={member.name}
+                loading="lazy"
+                className="size-12 shrink-0 rounded-full object-cover"
+              />
+            ) : null}
             <div className="min-w-0 flex-1">
               <p className="truncate font-medium">{member.name || "Unnamed"}</p>
               <p className="truncate text-xs text-muted-foreground">
@@ -116,19 +127,27 @@ export function MembersEditor() {
                 {member.featured ? " · featured" : ""}
                 {member.published ? "" : " · hidden"}
               </p>
+              <dl className="mt-2 space-y-0.5 text-xs text-muted-foreground">
+                <div className="truncate">PIN: {member.pin || "—"}</div>
+                <div className="truncate">Phone: {member.phone || "—"}</div>
+                <div className="truncate">Email: {member.email || "—"}</div>
+                <div className="truncate">Order: {member.sort_order}</div>
+              </dl>
             </div>
-            <Button variant="outline" size="sm" onClick={() => setDraft(member)}>
-              Edit
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => remove.mutate(member.id)}
-              disabled={remove.isPending}
-            >
-              <Trash2 className="size-4" />
-              <span className="sr-only">Delete member</span>
-            </Button>
+            <div className="flex shrink-0 items-center gap-1">
+              <Button variant="outline" size="sm" onClick={() => setDraft(member)}>
+                Edit
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => remove.mutate(member.id)}
+                disabled={remove.isPending}
+              >
+                <Trash2 className="size-4" />
+                <span className="sr-only">Delete member</span>
+              </Button>
+            </div>
           </div>
         ))}
       </div>

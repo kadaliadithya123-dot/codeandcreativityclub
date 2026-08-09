@@ -17,6 +17,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TestRouteImport } from './routes/test'
+import { Route as UpdatesRouteImport } from './routes/updates'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
@@ -69,6 +70,11 @@ const TeamRoute = TeamRouteImport.update({
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UpdatesRoute = UpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/team': typeof TeamRoute
   '/test': typeof TestRoute
+  '/updates': typeof UpdatesRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/events/$eventId': typeof EventsEventIdRoute
   '/events/': typeof EventsIndexRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/team': typeof TeamRoute
   '/test': typeof TestRoute
+  '/updates': typeof UpdatesRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/events': typeof EventsIndexRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/team': typeof TeamRoute
   '/test': typeof TestRoute
+  '/updates': typeof UpdatesRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/events/$eventId': typeof EventsEventIdRoute
   '/events/': typeof EventsIndexRoute
@@ -229,6 +238,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/team'
     | '/test'
+    | '/updates'
     | '/admin'
     | '/events/$eventId'
     | '/events/'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/team'
     | '/test'
+    | '/updates'
     | '/events/$eventId'
     | '/events'
     | '/admin/analytics'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/team'
     | '/test'
+    | '/updates'
     | '/_authenticated/admin'
     | '/events/$eventId'
     | '/events/'
@@ -299,6 +311,7 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   TeamRoute: typeof TeamRoute
   TestRoute: typeof TestRoute
+  UpdatesRoute: typeof UpdatesRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
   EventsIndexRoute: typeof EventsIndexRoute
   ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/updates': {
+      id: '/updates'
+      path: '/updates'
+      fullPath: '/updates'
+      preLoaderRoute: typeof UpdatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -524,6 +544,7 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   TeamRoute: TeamRoute,
   TestRoute: TestRoute,
+  UpdatesRoute: UpdatesRoute,
   EventsEventIdRoute: EventsEventIdRoute,
   EventsIndexRoute: EventsIndexRoute,
   ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,

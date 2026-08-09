@@ -3,8 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CalendarEditor } from "@/components/admin/website/CalendarEditor";
 import { ClubInfoEditor } from "@/components/admin/website/ClubInfoEditor";
 import { EventsEditor } from "@/components/admin/website/EventsEditor";
-import { ExamStepsEditor } from "@/components/admin/website/ExamStepsEditor";
-import { HeroEditor } from "@/components/admin/website/HeroEditor";
 import { MembersEditor } from "@/components/admin/website/MembersEditor";
 import { UpdatesEditor } from "@/components/admin/website/UpdatesEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,23 +30,15 @@ function WebsiteEditorPage() {
           Change any content on the public website — no code needed.
         </p>
       </header>
-      <Tabs defaultValue="hero" className="space-y-6">
+      <Tabs defaultValue="club" className="space-y-6">
         <TabsList className="flex-wrap">
-          <TabsTrigger value="hero">Home hero</TabsTrigger>
-          <TabsTrigger value="steps">Exam steps</TabsTrigger>
-          <TabsTrigger value="club">Club info</TabsTrigger>
+          <TabsTrigger value="club">Club info &amp; hero</TabsTrigger>
           <TabsTrigger value="calendar">Calendar</TabsTrigger>
           <TabsTrigger value="updates">Updates</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           <TabsTrigger value="team">Team</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="hero" className="glass rounded-2xl p-6">
-          <HeroEditor />
-        </TabsContent>
-        <TabsContent value="steps" className="glass rounded-2xl p-6">
-          <ExamStepsEditor />
-        </TabsContent>
         <TabsContent value="club" className="glass rounded-2xl p-6">
           <ClubInfoEditor />
         </TabsContent>

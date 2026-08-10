@@ -426,37 +426,28 @@ export type Database = {
     Views: {
       club_members_public: {
         Row: {
-          email: string | null
           featured: boolean | null
           id: string | null
           name: string | null
-          phone: string | null
           photo_url: string | null
-          pin: string | null
           published: boolean | null
           role_title: string | null
           sort_order: number | null
         }
         Insert: {
-          email?: string | null
           featured?: boolean | null
           id?: string | null
           name?: string | null
-          phone?: string | null
           photo_url?: string | null
-          pin?: string | null
           published?: boolean | null
           role_title?: string | null
           sort_order?: number | null
         }
         Update: {
-          email?: string | null
           featured?: boolean | null
           id?: string | null
           name?: string | null
-          phone?: string | null
           photo_url?: string | null
-          pin?: string | null
           published?: boolean | null
           role_title?: string | null
           sort_order?: number | null

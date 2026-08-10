@@ -24,7 +24,7 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
       supabase.from("club_events").select("*").eq("published", true).order("sort_order"),
       supabase
         .from("club_members_public")
-        .select("id, role_title, name, pin, email, phone, photo_url, featured, sort_order, published")
+        .select("id, role_title, name, photo_url, featured, sort_order, published")
         .order("sort_order"),
     ]);
 

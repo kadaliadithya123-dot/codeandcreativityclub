@@ -9,9 +9,9 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 
 const NAV_LINKS = [
   { to: "/", label: "Home", exact: true },
-  { to: "/events", label: "Events" },
-  { to: "/team", label: "Team" },
-  { to: "/updates", label: "Updates" },
+  { to: "/events", label: "Events", exact: false },
+  { to: "/team", label: "Team", exact: false },
+  { to: "/updates", label: "Updates", exact: false },
 ] as const;
 
 export function SiteHeader() {
@@ -45,7 +45,7 @@ export function SiteHeader() {
                 <Link
                   to={link.to}
                   activeProps={{ className: "text-primary" }}
-                  activeOptions={link.exact ? { exact: true } : undefined}
+                  activeOptions={{ exact: link.exact }}
                 >
                   {link.label}
                 </Link>
@@ -78,7 +78,7 @@ export function SiteHeader() {
                       to={link.to}
                       onClick={() => setOpen(false)}
                       activeProps={{ className: "text-primary" }}
-                      activeOptions={link.exact ? { exact: true } : undefined}
+                      activeOptions={{ exact: link.exact }}
                     >
                       {link.label}
                     </Link>
